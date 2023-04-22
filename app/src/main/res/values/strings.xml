@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">EventFinder</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="category">
+        <item>All</item>
+        <item>Music</item>
+        <item>Sports</item>
+        <item>Arts &amp; Theater</item>
+        <item>Film</item>
+        <item>Miscellaneous</item>
+    </string-array>
+</resources>
