@@ -5,4 +5,6 @@ object Constants {
     const val ARG_DISTANCE = "distance"
     const val ARG_CATEGORY = "category"
     const val ARG_LOCATION = "location"
+
+    const val BASE_URL = "https://ticketmaster-angular.wl.r.appspot.com"
 }

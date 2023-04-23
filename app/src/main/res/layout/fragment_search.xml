@@ -40,7 +40,7 @@
                     android:textColor="@color/green"
                     android:textSize="24sp" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/keyword_edittxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

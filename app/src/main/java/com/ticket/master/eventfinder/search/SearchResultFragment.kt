@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,10 +24,15 @@ class SearchResultFragment : Fragment() {
 
     private val args : SearchResultFragmentArgs by navArgs()
 
+//    private lateinit var viewModel : SearchResultViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        viewModel = ViewModelProvider(this)[SearchResultViewModel::class.java]
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentSearchResultBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -38,7 +44,6 @@ class SearchResultFragment : Fragment() {
         binding.searchResultToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-
         //Set up the recycler view
         configureRecyclerView()
     }
@@ -47,14 +52,18 @@ class SearchResultFragment : Fragment() {
         eventListAdapter = SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView))
         binding.eventListRecyclerView.adapter = eventListAdapter
         binding.eventListRecyclerView.layoutManager = LinearLayoutManager(activity)
-        var eventList: List<EventData> =
-            arrayListOf(
-                EventData(args.keyword, args.distance.toString(), args.location, "9:00 pm", args.category),
-                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music"),
-                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music"),
-                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music")
-            )
-        eventListAdapter.submitList(eventList)
+//        var eventList: List<EventData> =
+//            arrayListOf(
+//                EventData(args.keyword, args.distance.toString(), args.location, "9:00 pm", args.category),
+//                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music"),
+//                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music"),
+//                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music")
+//            )
+//        eventListAdapter.submitList(eventList)
+//        viewModel.getEvents(10,"Default","Los Angeles")
+//        viewModel.eventList.observe(viewLifecycleOwner){resource->
+//            eventListAdapter.submitList(resource.body)
+//        }
     }
 
 }

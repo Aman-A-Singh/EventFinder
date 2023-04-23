@@ -1,24 +1,26 @@
 package com.ticket.master.eventfinder.search
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.FragmentSearchBinding
-import com.ticket.master.eventfinder.home.HomeFragment
-import com.ticket.master.eventfinder.home.SearchTabScreen
 import com.ticket.master.eventfinder.util.Constants
 
 class SearchFragment : Fragment() {
 
     private lateinit var _binding: FragmentSearchBinding
     private val binding get() = _binding!!
+    private lateinit var viewModel: SearchFragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +34,25 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[SearchFragmentViewModel::class.java]
+
+        initAutoSuggesstion()
+
+        initSearchButtonClick()
+
+        binding.clearBtn.setOnClickListener {
+            clearEnteredData()
+        }
+
+        val arrayAdapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.category,
+            R.layout.custom_drop_down
+        )
+        binding.categorySpinner.adapter = arrayAdapter
+    }
+
+    private fun initSearchButtonClick() {
         binding.searchBtn.setOnClickListener {
             if (checkEnteredValues()) {
                 val location: String
@@ -42,8 +63,10 @@ class SearchFragment : Fragment() {
                 }
                 val bundle = bundleOf(
                     Constants.ARG_KEYWORD to binding.keywordEdittxt.text.toString().trim(),
-                    Constants.ARG_DISTANCE to binding.distanceEdittxt.text.trim().toString().toInt(),
-                    Constants.ARG_CATEGORY to binding.categorySpinner.selectedItem.toString().trim(),
+                    Constants.ARG_DISTANCE to binding.distanceEdittxt.text.trim().toString()
+                        .toInt(),
+                    Constants.ARG_CATEGORY to binding.categorySpinner.selectedItem.toString()
+                        .trim(),
                     Constants.ARG_LOCATION to location
                 )
                 this.findNavController()
@@ -58,17 +81,31 @@ class SearchFragment : Fragment() {
                 snackbar.show()
             }
         }
+    }
 
-        binding.clearBtn.setOnClickListener {
-            clearEnteredData()
+    private fun initAutoSuggesstion() {
+
+        viewModel.stringList.observe(viewLifecycleOwner) {
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)
+            binding.keywordEdittxt.setAdapter(adapter)
         }
 
-        val arrayAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.category,
-            R.layout.custom_drop_down
-        )
-        binding.categorySpinner.adapter = arrayAdapter
+        binding.keywordEdittxt.threshold = 1
+
+        binding.keywordEdittxt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val enteredText = s.toString()
+                if (s != null && s.length > 0) {
+                    viewModel.getSuggestions(enteredText)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 
     private fun clearEnteredData() {
