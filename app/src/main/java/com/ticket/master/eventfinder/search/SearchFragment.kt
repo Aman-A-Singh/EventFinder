@@ -3,6 +3,7 @@ package com.ticket.master.eventfinder.search
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.firebase.geofire.core.GeoHash
 import com.google.android.material.snackbar.Snackbar
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.FragmentSearchBinding
@@ -54,12 +56,18 @@ class SearchFragment : Fragment() {
 
     private fun initSearchButtonClick() {
         binding.searchBtn.setOnClickListener {
+
             if (checkEnteredValues()) {
-                val location: String
+                val address: String
+                var geoHash: String
+                viewModel.location.observe(viewLifecycleOwner){
+                    geoHash = GeoHash(it.lat,it.lng,7).toString()
+                }
                 if (!binding.autoLocationSwitch.isChecked) {
-                    location = binding.locationEdittxt.text.toString().trim()
+                    address = binding.locationEdittxt.text.toString().trim()
+                    viewModel.getLocation(address)
                 } else {
-                    location = "Auto Detect"
+                    address = ""
                 }
                 val bundle = bundleOf(
                     Constants.ARG_KEYWORD to binding.keywordEdittxt.text.toString().trim(),
@@ -67,10 +75,10 @@ class SearchFragment : Fragment() {
                         .toInt(),
                     Constants.ARG_CATEGORY to binding.categorySpinner.selectedItem.toString()
                         .trim(),
-                    Constants.ARG_LOCATION to location
+                    Constants.ARG_LOCATION to address
                 )
-                this.findNavController()
-                    .navigate(R.id.action_searchFragment2_to_searchResultFragment, bundle)
+//                this.findNavController()
+//                    .navigate(R.id.action_searchFragment2_to_searchResultFragment, bundle)
             } else {
                 var snackbar =
                     Snackbar.make(
