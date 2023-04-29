@@ -73,7 +73,7 @@ class SearchFragment : Fragment() {
                             .toInt(),
                         Constants.ARG_CATEGORY to binding.categorySpinner.selectedItem.toString()
                             .trim(),
-                        Constants.ARG_LOCATION to geoHash
+                        Constants.ARG_GEOHASH to geoHash
                     )
                     this.findNavController()
                         .navigate(R.id.action_searchFragment2_to_searchResultFragment, bundle)

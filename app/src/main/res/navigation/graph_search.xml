@@ -29,7 +29,7 @@
             android:name="category"
             app:argType="string"/>
         <argument
-            android:name="location"
+            android:name="geoHash"
             app:argType="string"/>
     </fragment>
 </navigation>

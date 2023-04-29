@@ -4,7 +4,7 @@ object Constants {
     const val ARG_KEYWORD = "keyword"
     const val ARG_DISTANCE = "distance"
     const val ARG_CATEGORY = "category"
-    const val ARG_LOCATION = "location"
+    const val ARG_GEOHASH = "geoHash"
 
     const val BASE_URL = "https://ticketmaster-angular.wl.r.appspot.com"
     const val LOCATION_URL = "https://maps.googleapis.com/maps/api/geocode/"

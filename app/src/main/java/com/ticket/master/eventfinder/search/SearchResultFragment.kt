@@ -49,7 +49,7 @@ class SearchResultFragment : Fragment() {
             SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView))
         binding.eventListRecyclerView.adapter = eventListAdapter
         binding.eventListRecyclerView.layoutManager = LinearLayoutManager(activity)
-        viewModel.getEvents(args.distance, "Default", args.keyword, args.location)
+        viewModel.getEvents(args.distance, "Default", args.keyword, args.geoHash)
         viewModel.eventList.observe(viewLifecycleOwner) { eventList ->
             eventListAdapter.submitList(eventList)
         }
