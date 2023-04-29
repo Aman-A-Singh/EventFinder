@@ -21,7 +21,7 @@ class EventItemViewHolder(
         itemBinding.date.text = eventData.dates.start.localDate
         itemBinding.timeTxt.text = eventData.dates.start.localTime
         itemBinding.locationTxt.text = eventData._embedded.venues[0].name
-        itemBinding.eventType.text = eventData.type
+        itemBinding.eventType.text = eventData.classifications[0].segment.name
 
         itemView.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_eventDetailFragment)
