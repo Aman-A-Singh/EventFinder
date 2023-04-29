@@ -62,19 +62,13 @@ class SearchFragment : Fragment() {
                 if (!binding.autoLocationSwitch.isChecked) {
                     address = binding.locationEdittxt.text.toString().trim()
                 } else {
-                    address=null
+                    address = null
                 }
+                var bundle = getInfo()
                 viewModel.getLocation(address)
-                viewModel.location.observe(viewLifecycleOwner){location->
-                    val geoHash = GeoHash(location.lat,location.lng,7).geoHashString
-                    val bundle = bundleOf(
-                        Constants.ARG_KEYWORD to binding.keywordEdittxt.text.toString().trim(),
-                        Constants.ARG_DISTANCE to binding.distanceEdittxt.text.trim().toString()
-                            .toInt(),
-                        Constants.ARG_CATEGORY to binding.categorySpinner.selectedItem.toString()
-                            .trim(),
-                        Constants.ARG_GEOHASH to geoHash
-                    )
+                viewModel.location.observe(viewLifecycleOwner) { location ->
+                    val geoHash = GeoHash(location.lat, location.lng, 7).geoHashString
+                    bundle.putString(Constants.ARG_GEOHASH, geoHash)
                     this.findNavController()
                         .navigate(R.id.action_searchFragment2_to_searchResultFragment, bundle)
                 }
@@ -88,6 +82,26 @@ class SearchFragment : Fragment() {
                 snackbar.show()
             }
         }
+    }
+
+    private fun getInfo(): Bundle {
+        val bundle = bundleOf(
+            Constants.ARG_KEYWORD to binding.keywordEdittxt.text.toString().trim(),
+            Constants.ARG_DISTANCE to binding.distanceEdittxt.text.trim().toString()
+                .toInt()
+        )
+        var category = when (binding.categorySpinner.selectedItemPosition) {
+            0 -> "Default"
+            1 -> "music"
+            2 -> "sports"
+            3 -> "arts"
+            4 -> "film"
+            5 -> "misc"
+            else ->
+                "Default"
+        }
+        bundle.putString(Constants.ARG_CATEGORY, category)
+        return bundle
     }
 
     private fun initAutoSuggesstion() {
