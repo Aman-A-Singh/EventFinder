@@ -14,6 +14,8 @@ class SearchResultRecyclerViewAdapter(val navController: NavController) : ListAd
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventItemViewHolder {
         val binding = EventItemRowBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        binding.eventTitle.isSelected = true
+        binding.locationTxt.isSelected = true
         return EventItemViewHolder(binding,navController)
     }
 

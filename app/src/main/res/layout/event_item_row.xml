@@ -41,7 +41,11 @@
                 tools:ignore="HardcodedText"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                tools:text="Ed Sheer" />
+                tools:text="Ed Sheer"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"/>
 
             <TextView
                 android:id="@+id/date"
@@ -57,15 +61,22 @@
 
             <TextView
                 android:id="@+id/location_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:contentDescription="playlistTitle"
                 android:text="Levi's Stadium"
                 android:textColor="@color/fontColor"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/time_txt"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_title" />
+                app:layout_constraintTop_toBottomOf="@+id/event_title"
+                app:layout_constraintWidth_default="wrap"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"/>
 
             <TextView
                 android:id="@+id/time_txt"
