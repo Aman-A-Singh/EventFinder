@@ -3,6 +3,8 @@ package com.ticket.master.eventfinder.viewHolder
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
 import com.ticket.master.eventfinder.models.EventData
@@ -22,6 +24,11 @@ class EventItemViewHolder(
         itemBinding.timeTxt.text = eventData.dates.start.localTime
         itemBinding.locationTxt.text = eventData._embedded.venues[0].name
         itemBinding.eventType.text = eventData.classifications[0].segment.name
+
+        Glide.with(itemBinding.eventImage.context)
+            .load(eventData.images[6].url)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(itemBinding.eventImage)
 
         itemView.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_eventDetailFragment)
