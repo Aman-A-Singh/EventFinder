@@ -19,9 +19,10 @@ class EventItemViewHolder(
     RecyclerView.ViewHolder(itemBinding.root) {
     fun bind(eventData: EventItem) {
         itemBinding.eventTitle.text = eventData.name
-//        val dateFormat = SimpleDateFormat("dd/mm/yyyy")
-        itemBinding.date.text = eventData.dates.start.localDate
-        itemBinding.timeTxt.text = eventData.dates.start.localTime
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        itemBinding.date.text = dateFormat.format(eventData.dates.start.date)
+        val timeFormat = SimpleDateFormat("h:mm a")
+        itemBinding.timeTxt.text = timeFormat.format(eventData.dates.start.time)
         itemBinding.locationTxt.text = eventData._embedded.venues[0].name
         itemBinding.eventType.text = eventData.classifications[0].segment.name
 
