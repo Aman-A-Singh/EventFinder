@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
 import com.ticket.master.eventfinder.models.EventData
+import com.ticket.master.eventfinder.models.event.EventItem
+import java.text.SimpleDateFormat
 
 
 class EventItemViewHolder(
@@ -13,12 +15,13 @@ class EventItemViewHolder(
     private val navController: NavController
 ) :
     RecyclerView.ViewHolder(itemBinding.root) {
-    fun bind(eventData: EventData) {
-        itemBinding.eventTitle.text = eventData.eventName
-        itemBinding.date.text = eventData.eventDate
-        itemBinding.timeTxt.text = eventData.eventTime
-        itemBinding.locationTxt.text = eventData.eventLocation
-        itemBinding.eventType.text = eventData.eventType
+    fun bind(eventData: EventItem) {
+        itemBinding.eventTitle.text = eventData.name
+//        val dateFormat = SimpleDateFormat("dd/mm/yyyy")
+        itemBinding.date.text = eventData.dates.start.localDate
+        itemBinding.timeTxt.text = eventData.dates.start.localTime
+        itemBinding.locationTxt.text = eventData._embedded.venues[0].name
+        itemBinding.eventType.text = eventData.type
 
         itemView.setOnClickListener {
             navController.navigate(R.id.action_homeFragment_to_eventDetailFragment)

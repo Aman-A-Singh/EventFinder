@@ -1,5 +1,6 @@
 package com.ticket.master.eventfinder.search
 
+import android.app.appsearch.SearchResult
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,19 +18,14 @@ import com.ticket.master.eventfinder.models.EventData
 
 class SearchResultFragment : Fragment() {
 
+    private lateinit var viewModel: SearchResultFragmentViewModel
     private lateinit var _binding: FragmentSearchResultBinding
     private val binding get() = _binding!!
 
     private lateinit var eventListAdapter: SearchResultRecyclerViewAdapter
 
-    private val args : SearchResultFragmentArgs by navArgs()
+    private val args: SearchResultFragmentArgs by navArgs()
 
-//    private lateinit var viewModel : SearchResultViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        viewModel = ViewModelProvider(this)[SearchResultViewModel::class.java]
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -40,7 +36,7 @@ class SearchResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[SearchResultFragmentViewModel::class.java]
         binding.searchResultToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -49,21 +45,14 @@ class SearchResultFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        eventListAdapter = SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView))
+        eventListAdapter =
+            SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView))
         binding.eventListRecyclerView.adapter = eventListAdapter
         binding.eventListRecyclerView.layoutManager = LinearLayoutManager(activity)
-//        var eventList: List<EventData> =
-//            arrayListOf(
-//                EventData(args.keyword, args.distance.toString(), args.location, "9:00 pm", args.category),
-//                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music"),
-//                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music"),
-//                EventData("Test1", "11/12/2023", "Pune Stadium", "9:00 pm", "Music")
-//            )
-//        eventListAdapter.submitList(eventList)
-//        viewModel.getEvents(10,"Default","Los Angeles")
-//        viewModel.eventList.observe(viewLifecycleOwner){resource->
-//            eventListAdapter.submitList(resource.body)
-//        }
+        viewModel.getEvents(args.distance, "Default", args.keyword, args.location)
+        viewModel.eventList.observe(viewLifecycleOwner) { eventList ->
+            eventListAdapter.submitList(eventList)
+        }
     }
 
 }

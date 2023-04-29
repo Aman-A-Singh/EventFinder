@@ -26,10 +26,14 @@ class SearchFragmentViewModel : ViewModel() {
         }
     }
 
-    fun getLocation(address: String) {
-        viewModelScope.launch {
-            val _location = LocationServiceApi.retrofitService1.getLocation(LOCATION_KEY, address)
-            location.value = _location.results.get(0).geometry.location
+    fun getLocation(address: String?) {
+        if(address != null){
+            viewModelScope.launch {
+                val _location = LocationServiceApi.retrofitService1.getLocation(LOCATION_KEY, address)
+                location.postValue(_location.results.get(0).geometry.location)
+            }
+        }else{
+            //write the logic to get last known location of user and post the location in LiveData
         }
     }
 }

@@ -6,10 +6,10 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.ListAdapter
 import com.ticket.master.eventfinder.common.EventDiffCallBack
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
-import com.ticket.master.eventfinder.models.EventData
+import com.ticket.master.eventfinder.models.event.EventItem
 import com.ticket.master.eventfinder.viewHolder.EventItemViewHolder
 
-class SearchResultRecyclerViewAdapter(val navController: NavController) : ListAdapter<EventData, EventItemViewHolder>(
+class SearchResultRecyclerViewAdapter(val navController: NavController) : ListAdapter<EventItem, EventItemViewHolder>(
     EventDiffCallBack()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventItemViewHolder {

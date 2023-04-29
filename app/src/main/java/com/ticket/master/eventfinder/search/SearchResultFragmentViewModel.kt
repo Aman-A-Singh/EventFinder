@@ -1,0 +1,41 @@
+package com.ticket.master.eventfinder.search
+
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.firebase.geofire.core.GeoHash
+import com.ticket.master.eventfinder.models.event.EventItem
+import com.ticket.master.eventfinder.models.location.LocationX
+import com.ticket.master.eventfinder.services.EventItemService
+import com.ticket.master.eventfinder.services.LocationServiceApi
+import com.ticket.master.eventfinder.util.Constants
+import kotlinx.coroutines.launch
+
+class SearchResultFragmentViewModel : ViewModel() {
+    val eventList: MutableLiveData<List<EventItem>> = MutableLiveData()
+    private val _location = MutableLiveData<LocationX>()
+    val location : LiveData<LocationX> = _location
+
+    fun getEvents(radius: Int, category: String, keyword: String, geoHash: String) {
+        viewModelScope.launch {
+            try {
+                eventList.value = EventItemService.EventsServiceApi.retrofitService.getEvents(
+                    radius,
+                    category,
+                    keyword,
+                    geoHash
+                )
+            }catch (e: Exception) {
+                Log.d("Tag","Exception")
+            }
+        }
+    }
+//    fun getLocation(address: String) {
+//        viewModelScope.launch {
+//            val _location = LocationServiceApi.retrofitService1.getLocation(Constants.LOCATION_KEY, address)
+//            location.postValue(_location.results.get(0).geometry.location)
+//        }
+//    }
+}
