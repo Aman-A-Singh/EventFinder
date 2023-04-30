@@ -3,6 +3,7 @@ package com.ticket.master.eventfinder.eventTabs
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,13 +15,17 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.FragmentDetailsBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
 import com.ticket.master.eventfinder.models.event.EventDetails
 import com.ticket.master.eventfinder.util.UIState
 import java.text.SimpleDateFormat
+import javax.sql.DataSource
 
 class DetailsFragment : Fragment() {
 
@@ -79,13 +84,44 @@ class DetailsFragment : Fragment() {
                 binding.priceRangeTxt.visibility = View.GONE
                 binding.priceRange.visibility = View.GONE
             }
-            Glide.with(binding.seatImage.context)
-                .load(event.seatmap.staticUrl)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.seatImage)
+            bindSeatImage(event.seatmap.staticUrl)
 
             bindTicketStatus(event.dates.status.code)
         }
+    }
+
+    private fun bindSeatImage(staticUrl: String) {
+        Glide.with(binding.seatImage.context)
+            .load(staticUrl)
+    //                .placeholder(R.drawable.placeholder_image) // Placeholder image to display while loading the actual image
+    //                .error(R.drawable.error_image) // Error image to display in case of loading failure
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    binding.seatImage.visibility =
+                        View.GONE // Hide the ImageView if the image is not available or loading fails
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: com.bumptech.glide.load.DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    binding.seatImage.visibility =
+                        View.VISIBLE // Show the ImageView if the image is loaded successfully
+                    return false
+                }
+
+            })
+            .into(binding.seatImage)
     }
 
     private fun bindGenre(classifications: List<EventDetails.Classification>) {
