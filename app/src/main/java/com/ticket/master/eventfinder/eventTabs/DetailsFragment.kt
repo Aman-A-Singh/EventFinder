@@ -1,7 +1,9 @@
 package com.ticket.master.eventfinder.eventTabs
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
@@ -12,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +23,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.FragmentDetailsBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
+import com.ticket.master.eventfinder.models.event.EventDetails
 import com.ticket.master.eventfinder.util.UIState
 import java.text.SimpleDateFormat
 
@@ -58,24 +62,15 @@ class DetailsFragment : Fragment() {
     }
 
     private fun bind() {
-        viewModel.eventData.let {event->
+        viewModel.eventData.let { event ->
             binding.artistTeamsTxt.text = event.name
             binding.venueTxt.text = event._embedded.venues[0].name
             val dateFormat = SimpleDateFormat("MMM dd,yyyy")
             binding.dateTxt.text = dateFormat.format(event.dates.start.date)
             val timeFormat = SimpleDateFormat("h:mm a")
             binding.timeTxt.text = timeFormat.format(event.dates.start.time)
-            if (event.url != null) {
-                binding.buyTicketAtText.text = event.url
-                binding.buyTicketAtText.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(event.url)
-                    startActivity(intent)
-                }
-            } else {
-                binding.buyTicketAtText.visibility = View.GONE
-                binding.buyTicket.visibility = View.GONE
-            }
+
+            bindBuyTicketURL(event.url)
 
             if (event.priceRanges != null) {
                 binding.priceRangeTxt.text =
@@ -88,6 +83,51 @@ class DetailsFragment : Fragment() {
                 .load(event.seatmap.staticUrl)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.seatImage)
+
+            bindTicketStatus(event.dates.status.code)
+        }
+    }
+
+    private fun bindTicketStatus(code: String) {
+        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ticket_status_background)
+        var color  = android.R.color.transparent
+        when (code) {
+            "onsale" -> {
+                binding.ticketStatusTxt.text = "On Sale"
+                color = resources.getColor(R.color.green)
+            }
+            "offsale" -> {
+                binding.ticketStatusTxt.text = "Off Sale"
+                color = resources.getColor(R.color.green)
+            }
+            "cancelled" -> {
+                binding.ticketStatusTxt.text = "Cancelled"
+                color = resources.getColor(R.color.green)
+            }
+            "postponed" -> {
+                binding.ticketStatusTxt.text = "Postponed"
+                color = resources.getColor(R.color.green)
+            }
+            "rescheduled" -> {
+                binding.ticketStatusTxt.text = "Rescheduled"
+                color = resources.getColor(R.color.green)
+            }
+        }
+        drawable?.mutate()?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        binding.ticketStatusTxt.background = drawable
+    }
+
+    private fun bindBuyTicketURL(url: String?) {
+        if (url != null) {
+            binding.buyTicketAtText.text = url
+            binding.buyTicketAtText.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(url)
+                startActivity(intent)
+            }
+        } else {
+            binding.buyTicketAtText.visibility = View.GONE
+            binding.buyTicket.visibility = View.GONE
         }
     }
 }

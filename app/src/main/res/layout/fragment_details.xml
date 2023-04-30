@@ -159,11 +159,13 @@
 
                 <TextView
                     android:id="@+id/ticket_status_txt"
-                    style="@style/GreenText"
-                    android:layout_width="match_parent"
+                    style="@style/LabelText"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="on Sale"
+                    android:text="Status"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
                     android:textAlignment="center" />
 
                 <TextView
