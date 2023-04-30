@@ -56,10 +56,35 @@ class DetailsFragment : Fragment() {
 
     private fun bind() {
         viewModel.eventData.let { event ->
-            val toolbarTitle = requireParentFragment().view?.findViewById<TextView>(R.id.toolBar_title)
+            val toolbarTitle =
+                requireParentFragment().view?.findViewById<TextView>(R.id.toolBar_title)
             toolbarTitle?.isSelected = true
             toolbarTitle?.text = event.name
+            val toolbar =
+                requireParentFragment().view?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.eventDetailsToolBar)
+            toolbar?.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.faceBook -> {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data =
+                            Uri.parse("https://www.facebook.com/sharer/sharer.php?u=${event.url}")
+                        startActivity(intent)
+                        true
+                    }
 
+                    R.id.twitter -> {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data =
+                            Uri.parse("http://twitter.com/share?text=Check ${event.name} Tour on Ticketmaster.&url=${event.url}")
+                        intent.setPackage("com.android.chrome")
+                        startActivity(intent)
+                        true
+                    }
+                    else -> {
+                        false
+                    }
+                }
+            }
             binding.artistTeamsTxt.text = event.name
             binding.venueTxt.text = event._embedded.venues[0].name
             val dateFormat = SimpleDateFormat("MMM dd,yyyy")
@@ -86,25 +111,30 @@ class DetailsFragment : Fragment() {
     }
 
     private fun bindTicketStatus(code: String) {
-        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ticket_status_background)
-        var color  = android.R.color.transparent
+        val drawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ticket_status_background)
+        var color = android.R.color.transparent
         when (code) {
             "onsale" -> {
                 binding.ticketStatusTxt.text = "On Sale"
                 color = resources.getColor(R.color.onsale)
             }
+
             "offsale" -> {
                 binding.ticketStatusTxt.text = "Off Sale"
                 color = resources.getColor(R.color.offsale)
             }
+
             "cancelled" -> {
                 binding.ticketStatusTxt.text = "Cancelled"
                 color = resources.getColor(R.color.cancelled)
             }
+
             "postponed" -> {
                 binding.ticketStatusTxt.text = "Postponed"
                 color = resources.getColor(R.color.postponed_rescheduled)
             }
+
             "rescheduled" -> {
                 binding.ticketStatusTxt.text = "Rescheduled"
                 color = resources.getColor(R.color.postponed_rescheduled)
