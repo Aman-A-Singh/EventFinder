@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -17,6 +18,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.FragmentDetailsBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
+import com.ticket.master.eventfinder.models.event.EventDetails
 import com.ticket.master.eventfinder.util.UIState
 import java.text.SimpleDateFormat
 
@@ -56,41 +58,17 @@ class DetailsFragment : Fragment() {
 
     private fun bind() {
         viewModel.eventData.let { event ->
-            val toolbarTitle =
-                requireParentFragment().view?.findViewById<TextView>(R.id.toolBar_title)
-            toolbarTitle?.isSelected = true
-            toolbarTitle?.text = event.name
-            val toolbar =
-                requireParentFragment().view?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.eventDetailsToolBar)
-            toolbar?.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.faceBook -> {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data =
-                            Uri.parse("https://www.facebook.com/sharer/sharer.php?u=${event.url}")
-                        startActivity(intent)
-                        true
-                    }
 
-                    R.id.twitter -> {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data =
-                            Uri.parse("http://twitter.com/share?text=Check ${event.name} Tour on Ticketmaster.&url=${event.url}")
-                        intent.setPackage("com.android.chrome")
-                        startActivity(intent)
-                        true
-                    }
-                    else -> {
-                        false
-                    }
-                }
-            }
+            bindToolBar(event.name, event.url)
+
             binding.artistTeamsTxt.text = event.name
             binding.venueTxt.text = event._embedded.venues[0].name
             val dateFormat = SimpleDateFormat("MMM dd,yyyy")
             binding.dateTxt.text = dateFormat.format(event.dates.start.date)
             val timeFormat = SimpleDateFormat("h:mm a")
             binding.timeTxt.text = timeFormat.format(event.dates.start.time)
+
+            bindGenre(event.classifications)
 
             bindBuyTicketURL(event.url)
 
@@ -107,6 +85,73 @@ class DetailsFragment : Fragment() {
                 .into(binding.seatImage)
 
             bindTicketStatus(event.dates.status.code)
+        }
+    }
+
+    private fun bindGenre(classifications: List<EventDetails.Classification>) {
+        var genre = ArrayList<String>()
+        if (classifications[0].segment != null) {
+            if (!classifications[0].segment!!.name.equals("Undefined")) {
+                genre.add(classifications[0].segment!!.name)
+            }
+        }
+        if (classifications[0].genre != null) {
+            if (!classifications[0].genre!!.name.equals("Undefined")) {
+                genre.add(classifications[0].genre!!.name)
+            }
+        }
+        if (classifications[0].subGenre != null) {
+            if (!classifications[0].subGenre!!.name.equals("Undefined")) {
+                genre.add(classifications[0].subGenre!!.name)
+            }
+        }
+        if (classifications[0].type != null) {
+            if (!classifications[0].type!!.name.equals("Undefined")) {
+                genre.add(classifications[0].type!!.name)
+            }
+        }
+        if ((classifications[0].subType != null)) {
+            if (!classifications[0].subType!!.name.equals("Undefined")) {
+                genre.add(classifications[0].subType!!.name)
+            }
+        }
+        binding.genresTxt.isSelected = true
+        binding.genresTxt.text = genre.joinToString("|")
+    }
+
+    private fun bindToolBar(name: String, url: String?) {
+        val toolbarTitle =
+            requireParentFragment().view?.findViewById<TextView>(R.id.toolBar_title)
+        toolbarTitle?.isSelected = true
+        toolbarTitle?.text = name
+        val toolbar =
+            requireParentFragment().view?.findViewById<Toolbar>(R.id.eventDetailsToolBar)
+
+        if (url != null) {
+            toolbar?.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.faceBook -> {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data =
+                            Uri.parse("https://www.facebook.com/sharer/sharer.php?u=${url}")
+                        startActivity(intent)
+                        true
+                    }
+
+                    R.id.twitter -> {
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data =
+                            Uri.parse("http://twitter.com/share?text=Check ${name} Tour on Ticketmaster.&url=${url}")
+                        intent.setPackage("com.android.chrome")
+                        startActivity(intent)
+                        true
+                    }
+
+                    else -> {
+                        false
+                    }
+                }
+            }
         }
     }
 

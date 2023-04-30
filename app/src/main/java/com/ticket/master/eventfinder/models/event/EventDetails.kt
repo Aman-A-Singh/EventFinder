@@ -12,6 +12,13 @@ data class EventDetails(
     val url: String?,
     val priceRanges : ArrayList<PriceRangesItem> ?
 ) {
+    data class Classification(
+        val segment: Segment?,
+        val genre: Segment?,
+        val subGenre: Segment?,
+        val type: Segment?,
+        val subType: Segment?
+    )
     data class Embedded(
         val venues: List<Venue>,
         val attractions : List<Attractions>

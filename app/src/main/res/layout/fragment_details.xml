@@ -102,19 +102,15 @@
 
                 <TextView
                     android:id="@+id/artist_teams_txt"
-                    style="@style/GreenText"
+                    style="@style/GreenMarqueeText"
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
                     android:text="Helloooooo"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/venue_txt"
-                    style="@style/GreenText"
+                    style="@style/GreenMarqueeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -141,12 +137,12 @@
 
                 <TextView
                     android:id="@+id/genres_txt"
-                    style="@style/GreenText"
+                    style="@style/GreenMarqueeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Music | Pop | pop"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"/>
 
                 <TextView
                     android:id="@+id/price_range_txt"
@@ -170,17 +166,13 @@
 
                 <TextView
                     android:id="@+id/buyTicketAtText"
-                    style="@style/GreenText"
+                    style="@style/GreenMarqueeText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="https://www.ticketmaster.com/event/Z7r9jZ1AdpZ-S"
                     android:textAlignment="center"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:singleLine="true"
-                    android:clickable="true"/>
+                    android:clickable="true" />
 
             </LinearLayout>
 
