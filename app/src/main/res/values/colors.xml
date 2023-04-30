@@ -21,4 +21,9 @@
     <color name="cardColor">#FFE596</color>
     <color name="popularity">#8D203C</color>
 
+    <color name="onsale">#008000</color>
+    <color name="offsale">#FF0000</color>
+    <color name="cancelled">#000000</color>
+    <color name="postponed_rescheduled">#FFA500</color>
+
 </resources>

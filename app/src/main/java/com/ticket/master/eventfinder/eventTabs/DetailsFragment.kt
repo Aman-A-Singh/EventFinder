@@ -91,23 +91,23 @@ class DetailsFragment : Fragment() {
         when (code) {
             "onsale" -> {
                 binding.ticketStatusTxt.text = "On Sale"
-                color = resources.getColor(R.color.green)
+                color = resources.getColor(R.color.onsale)
             }
             "offsale" -> {
                 binding.ticketStatusTxt.text = "Off Sale"
-                color = resources.getColor(R.color.green)
+                color = resources.getColor(R.color.offsale)
             }
             "cancelled" -> {
                 binding.ticketStatusTxt.text = "Cancelled"
-                color = resources.getColor(R.color.green)
+                color = resources.getColor(R.color.cancelled)
             }
             "postponed" -> {
                 binding.ticketStatusTxt.text = "Postponed"
-                color = resources.getColor(R.color.green)
+                color = resources.getColor(R.color.postponed_rescheduled)
             }
             "rescheduled" -> {
                 binding.ticketStatusTxt.text = "Rescheduled"
-                color = resources.getColor(R.color.green)
+                color = resources.getColor(R.color.postponed_rescheduled)
             }
         }
         drawable?.mutate()?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
