@@ -63,6 +63,8 @@ class DetailsFragment : Fragment() {
 
     private fun bind() {
         viewModel.eventData.let { event ->
+            val toolbar = requireParentFragment().view?.findViewById<androidx.appcompat.widget.Toolbar>(R.id.eventDetailsToolBar)
+            toolbar?.title = event.name
             binding.artistTeamsTxt.text = event.name
             binding.venueTxt.text = event._embedded.venues[0].name
             val dateFormat = SimpleDateFormat("MMM dd,yyyy")
