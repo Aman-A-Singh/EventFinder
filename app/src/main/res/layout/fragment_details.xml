@@ -177,7 +177,8 @@
                     android:ellipsize="marquee"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:clickable="true"/>
 
             </LinearLayout>
 
