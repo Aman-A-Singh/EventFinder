@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/faceBook"
+        android:icon="@drawable/facebook"
+        android:title="Facebook"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/twitter"
+        android:icon="@drawable/twitter"
+        android:title="Twitter"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/favorites"
+        android:icon="@drawable/heart_outline"
+        android:title="Add To Favorites"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

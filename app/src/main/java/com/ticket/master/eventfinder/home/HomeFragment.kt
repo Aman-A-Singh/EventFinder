@@ -5,15 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.FragmentItems
 import com.ticket.master.eventfinder.adapter.ViewPagerAdapter
 import com.ticket.master.eventfinder.databinding.FragmentHomeBinding
-import com.ticket.master.eventfinder.eventDetails.EventDetailFragment
 
 class HomeFragment : Fragment() {
 
@@ -30,8 +24,6 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
-        val actionBar = (activity as AppCompatActivity).supportActionBar
-        actionBar?.show()
         return view
     }
 

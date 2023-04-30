@@ -14,8 +14,22 @@
         android:layout_height="wrap_content"
         android:background="@color/gray"
         app:navigationIcon="@drawable/ic_arrow_back_green"
-        app:title="Event Title"
-        app:titleTextColor="@color/green" />
+        app:titleTextColor="@color/green">
+
+        <TextView
+            android:id="@+id/toolBar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/green"
+            style="@style/GreenText"
+            android:text="Helloooooooooooooooooooooo"
+            android:textSize="20sp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            />
+    </androidx.appcompat.widget.Toolbar>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/eventDetailsTab"
