@@ -1,14 +1,14 @@
 package com.ticket.master.eventfinder.viewHolder
 
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
-import com.ticket.master.eventfinder.models.EventData
 import com.ticket.master.eventfinder.models.event.EventItem
+import com.ticket.master.eventfinder.util.Constants
 import java.text.SimpleDateFormat
 
 
@@ -32,7 +32,8 @@ class EventItemViewHolder(
             .into(itemBinding.eventImage)
 
         itemView.setOnClickListener {
-            navController.navigate(R.id.action_homeFragment_to_eventDetailFragment)
+            val bundle = bundleOf(Constants.ARG_EVENT_ID to eventData.id)
+            navController.navigate(R.id.action_homeFragment_to_eventDetailFragment,bundle)
         }
 
         itemBinding.addFavoritesImage.setOnClickListener {

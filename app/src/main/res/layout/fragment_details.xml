@@ -7,18 +7,20 @@
     tools:context=".eventTabs.DetailsFragment">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/eventDetailsCardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="30dp"
+        android:paddingBottom="20dp"
         android:backgroundTint="@color/black"
         app:cardCornerRadius="25dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="30dp">
 
             <LinearLayout
@@ -30,14 +32,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/artist_teams_txt"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Artist/Teams" />
 
                 <TextView
-                    android:id="@+id/venue_txt"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +45,6 @@
                     android:text="Venue" />
 
                 <TextView
-                    android:id="@+id/date_txt"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,7 +52,6 @@
                     android:text="Date" />
 
                 <TextView
-                    android:id="@+id/time_txt"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -61,7 +59,6 @@
                     android:text="Time" />
 
                 <TextView
-                    android:id="@+id/genres_txt"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,7 +66,7 @@
                     android:text="Genres" />
 
                 <TextView
-                    android:id="@+id/price_range_txt"
+                    android:id="@+id/price_range"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,7 +74,6 @@
                     android:text="Price Range" />
 
                 <TextView
-                    android:id="@+id/ticket_status_txt"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,7 +81,7 @@
                     android:text="Ticket Status" />
 
                 <TextView
-                    android:id="@+id/buyTicketAtText"
+                    android:id="@+id/buyTicket"
                     style="@style/LabelText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -105,65 +101,91 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/artist_teams_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    android:text="Hellooooooooo" />
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="Helloooooo"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/venue_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Levi's Stadium" />
+                    android:text="Levi's Stadium"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/date_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Sep 16, 2023" />
+                    android:text="Sep 16, 2023"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/time_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="6:00 PM" />
+                    android:text="6:00 PM"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/genres_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Music | Pop | pop" />
+                    android:text="Music | Pop | pop"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/price_range_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="49 - 150(USD)" />
+                    android:text="49 - 150(USD)"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/ticket_status_txt"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="on Sale" />
+                    android:text="on Sale"
+                    android:textAlignment="center" />
 
                 <TextView
+                    android:id="@+id/buyTicketAtText"
                     style="@style/GreenText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Hellooooooooo" />
+                    android:text="https://www.ticketmaster.com/event/Z7r9jZ1AdpZ-S"
+                    android:textAlignment="center"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/seatImage"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

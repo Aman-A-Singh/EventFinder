@@ -5,12 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.firebase.geofire.core.GeoHash
 import com.ticket.master.eventfinder.models.event.EventItem
 import com.ticket.master.eventfinder.models.location.LocationX
-import com.ticket.master.eventfinder.services.EventItemService
-import com.ticket.master.eventfinder.services.LocationServiceApi
-import com.ticket.master.eventfinder.util.Constants
+import com.ticket.master.eventfinder.services.EventService
 import kotlinx.coroutines.launch
 
 class SearchResultFragmentViewModel : ViewModel() {
@@ -21,7 +18,7 @@ class SearchResultFragmentViewModel : ViewModel() {
     fun getEvents(radius: Int, category: String, keyword: String, geoHash: String) {
         viewModelScope.launch {
             try {
-                eventList.value = EventItemService.EventsServiceApi.retrofitService.getEvents(
+                eventList.value = EventService.EventsServiceApi.retrofitService.getEventList(
                     radius,
                     category,
                     keyword,

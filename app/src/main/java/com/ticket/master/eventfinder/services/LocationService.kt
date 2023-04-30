@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private val retrofit1 = Retrofit.Builder()
+private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(Constants.LOCATION_URL)
     .build()
@@ -19,8 +19,8 @@ interface LocationService {
 }
 
 object LocationServiceApi{
-    val retrofitService1: LocationService by lazy {
-        retrofit1.create(LocationService::class.java)
+    val retrofitService: LocationService by lazy {
+        retrofit.create(LocationService::class.java)
     }
 
 }

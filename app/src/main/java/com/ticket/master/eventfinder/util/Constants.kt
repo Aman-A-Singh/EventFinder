@@ -6,6 +6,8 @@ object Constants {
     const val ARG_CATEGORY = "category"
     const val ARG_GEOHASH = "geoHash"
 
+    const val ARG_EVENT_ID = "event_id"
+
     const val BASE_URL = "https://ticketmaster-angular.wl.r.appspot.com"
     const val LOCATION_URL = "https://maps.googleapis.com/maps/api/geocode/"
     const val AUTO_LOCATION_URL = "https://ipinfo.io/"

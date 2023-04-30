@@ -31,12 +31,12 @@ data class Segment(
 )
 
 data class Dates(
-    val start: Start,
+    val start: Start
 )
 
 data class Start(
     private val localDate: String,
-    private val localTime: String,
+    private val localTime: String
 ){
     val date : Date?
         get() {

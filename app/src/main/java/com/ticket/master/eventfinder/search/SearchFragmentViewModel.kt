@@ -29,7 +29,7 @@ class SearchFragmentViewModel : ViewModel() {
     fun getLocation(address: String?) {
         if(address != null){
             viewModelScope.launch {
-                val _location = LocationServiceApi.retrofitService1.getLocation(LOCATION_KEY, address)
+                val _location = LocationServiceApi.retrofitService.getLocation(LOCATION_KEY, address)
                 location.postValue(_location.results.get(0).geometry.location)
             }
         }else{

@@ -1,6 +1,5 @@
 package com.ticket.master.eventfinder.search
 
-import android.app.appsearch.SearchResult
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
 import com.ticket.master.eventfinder.databinding.FragmentSearchResultBinding
-import com.ticket.master.eventfinder.models.EventData
 
 class SearchResultFragment : Fragment() {
 

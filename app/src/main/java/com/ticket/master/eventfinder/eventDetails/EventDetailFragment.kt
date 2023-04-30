@@ -1,12 +1,17 @@
 package com.ticket.master.eventfinder.eventDetails
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.FragmentItems
 import com.ticket.master.eventfinder.adapter.ViewPagerAdapter
@@ -14,13 +19,18 @@ import com.ticket.master.eventfinder.databinding.FragmentEventDetailBinding
 import com.ticket.master.eventfinder.eventTabs.ArtistsFragment
 import com.ticket.master.eventfinder.eventTabs.DetailsFragment
 import com.ticket.master.eventfinder.eventTabs.VenueFragment
-import com.ticket.master.eventfinder.home.FavoritesFragment
-
+import com.ticket.master.eventfinder.services.EventService
+import com.ticket.master.eventfinder.util.UIState
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class EventDetailFragment : Fragment() {
 
     private lateinit var _binding: FragmentEventDetailBinding
     private val binding get() = _binding!!
+    private val viewModel by activityViewModels<EventDetailsViewModel>()
+
+    private val args: EventDetailFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +43,8 @@ class EventDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val actionBar = (activity as AppCompatActivity).supportActionBar
         actionBar?.hide()
+        viewModel.uiState.value = UIState.INPROGREES
+        viewModel.getEventData(args.eventId)
 
         binding.eventDetailsToolBar.setNavigationOnClickListener {
             findNavController().popBackStack()

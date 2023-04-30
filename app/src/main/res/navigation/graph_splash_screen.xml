@@ -29,5 +29,9 @@
         android:id="@+id/eventDetailFragment"
         android:name="com.ticket.master.eventfinder.eventDetails.EventDetailFragment"
         android:label="fragment_event_detail"
-        tools:layout="@layout/fragment_event_detail" />
+        tools:layout="@layout/fragment_event_detail" >
+        <argument
+            android:name="event_id"
+            app:argType="string" />
+    </fragment>
 </navigation>
