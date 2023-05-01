@@ -15,4 +15,6 @@ object Constants {
     const val LOCATION_KEY = "AIzaSyAQb5xT6gDIRGuhXOvTcnU_E2lvQaS5GuU"
     const val AUTO_LOCATION_IP_KEY = "158f827e48dd95"
 
+    const val MAPVIEW_BUNDLE_KEY = "Map View Key"
+
 }
