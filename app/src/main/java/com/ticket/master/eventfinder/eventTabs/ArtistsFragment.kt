@@ -6,6 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ticket.master.eventfinder.R
+import com.ticket.master.eventfinder.adapter.ArtistRecyclerViewAdapter
+import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
 import com.ticket.master.eventfinder.databinding.FragmentArtistsBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
 import com.ticket.master.eventfinder.util.UIState
@@ -32,9 +37,11 @@ class ArtistsFragment : Fragment() {
                 UIState.COMPLETED -> {
                     initUI()
                 }
+
                 UIState.ERROR -> {}
             }
         }
+        configureRecyclerView()
     }
 
     private fun initUI() {
@@ -42,12 +49,21 @@ class ArtistsFragment : Fragment() {
             val performers = mutableListOf<String>()
             eventDetails._embedded.attractions?.map {
                 performers.add(it.name)
-            } ?: run{
+            } ?: run {
 
             }
-            if(performers.size>0){
+            if (performers.size > 0) {
                 viewModel.getArtists(performers)
             }
+        }
+    }
+
+    private fun configureRecyclerView() {
+        var artistListAdapter = ArtistRecyclerViewAdapter()
+        binding.artistRecyclerView.adapter = artistListAdapter
+        binding.artistRecyclerView.layoutManager = LinearLayoutManager(activity)
+        viewModel.artistList.observe(viewLifecycleOwner) { eventList ->
+            artistListAdapter.submitList(eventList)
         }
     }
 }

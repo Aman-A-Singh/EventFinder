@@ -13,23 +13,23 @@ import com.ticket.master.eventfinder.services.EventService
 import com.ticket.master.eventfinder.util.UIState
 import kotlinx.coroutines.launch
 
-class EventDetailsViewModel:ViewModel() {
-    lateinit var eventData : EventDetails
-    lateinit var artistList: List<ArtistDetail>
-    val uiState : MutableLiveData<UIState> = MutableLiveData(UIState.INPROGREES)
+class EventDetailsViewModel : ViewModel() {
+    lateinit var eventData: EventDetails
+    var artistList: MutableLiveData<List<ArtistDetail>> = MutableLiveData()
+    val uiState: MutableLiveData<UIState> = MutableLiveData(UIState.INPROGREES)
 
-    fun getEventData(event_id:String){
-        viewModelScope.launch{
+    fun getEventData(event_id: String) {
+        viewModelScope.launch {
             val event = EventService.EventsServiceApi.retrofitService.getEventDetail(event_id)
             eventData = event
             uiState.postValue(UIState.COMPLETED)
         }
     }
 
-    fun getArtists(performers:List<String>){
+    fun getArtists(performers: List<String>) {
         viewModelScope.launch {
             val _artistList = ArtistDetailServiceApi.retrofitService.getEventList(performers)
-            artistList = _artistList
+            artistList.postValue(_artistList)
         }
     }
 }
