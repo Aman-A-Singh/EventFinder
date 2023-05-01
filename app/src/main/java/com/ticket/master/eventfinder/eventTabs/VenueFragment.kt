@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.ticket.master.eventfinder.databinding.FragmentVenueBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
 import com.ticket.master.eventfinder.models.event.EventDetails
-import com.ticket.master.eventfinder.models.location.LocationX
 import com.ticket.master.eventfinder.util.Constants.MAPVIEW_BUNDLE_KEY
 import com.ticket.master.eventfinder.util.UIState
 
@@ -65,23 +64,71 @@ class VenueFragment : Fragment(), OnMapReadyCallback {
             binding.venueName.text = it.name
 
             var venue = it._embedded.venues[0]
-            var addressText: String? = null
-            if (venue.address != null) {
-                addressText = venue.address!!.line1
-            }
-            if (venue.city != null) {
-                addressText = addressText + ", " + venue.city!!.name
-            }
-            if (venue.state != null) {
-                addressText = addressText + ", " + venue.state!!.name
-            }
-            binding.addressTxt.text = addressText
+            bindMapCardView(venue)
 
             val _location = it._embedded.venues[0].location
             if (_location != null) {
                 location = LatLng(_location.latitude.toDouble(), _location.longitude.toDouble())
             }
             bindMap()
+
+            bindRules(it._embedded.venues[0])
+        }
+    }
+
+    private fun bindMapCardView(venue: EventDetails.Embedded.Venues) {
+        var addressText: String? = null
+        var city_state: String? = null
+        if (venue.address != null) {
+            addressText = venue.address.line1
+        }
+        if (venue.city != null) {
+            addressText = addressText + ", " + venue.city.name
+            city_state = venue.city.name
+        }
+        if (venue.state != null) {
+            addressText = addressText + ", " + venue.state.name
+            city_state = city_state + ", " + venue.state.name
+        }
+        binding.cityStateTxt.isSelected = true
+        binding.addressTxt.text = addressText
+        binding.cityStateTxt.text = city_state
+
+        if (venue.boxOfficeInfo != null && venue.boxOfficeInfo.phoneNumberDetail != null) {
+            binding.contactInfoTxt.isSelected = true
+            binding.contactInfoTxt.text = venue.boxOfficeInfo.phoneNumberDetail
+        } else {
+            binding.contactInfoTxt.visibility = View.GONE
+            binding.contactInfoLbl.visibility = View.GONE
+        }
+    }
+
+    private fun bindRules(venuDetails: EventDetails.Embedded.Venues) {
+        val boxOfficeInfo = venuDetails.boxOfficeInfo
+        if (boxOfficeInfo != null) {
+            binding.openHoursValueText.text = boxOfficeInfo.openHoursDetail
+        } else {
+            binding.openHoursValueText.visibility = View.GONE
+            binding.openHoursText.visibility = View.GONE
+        }
+        val generalInfo = venuDetails.generalInfo
+        if (generalInfo != null) {
+            if (generalInfo.generalRule != null) {
+                binding.generalInfoValueText.text = generalInfo.generalRule
+            } else {
+                binding.generalInfoText.visibility = View.GONE
+                binding.generalInfoValueText.visibility = View.GONE
+            }
+            if (generalInfo.childRule != null) {
+                binding.childRulesValueText.text = generalInfo.childRule
+            } else {
+                binding.childRulesText.visibility = View.GONE
+                binding.childRulesValueText.visibility = View.GONE
+            }
+        }
+
+        if ((boxOfficeInfo == null) && (generalInfo == null)) {
+            binding.rulesCardView.visibility = View.GONE
         }
     }
 

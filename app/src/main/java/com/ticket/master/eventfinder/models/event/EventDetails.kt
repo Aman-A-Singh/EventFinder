@@ -31,7 +31,9 @@ data class EventDetails(
             val name: String?,
             val postalCode: String?,
             val state: State?,
-            val url: String?
+            val url: String?,
+            val boxOfficeInfo :BoxOfficeInfo?,
+            val generalInfo : GeneralInfo?
         ){
             data class Address(
                 val line1: String
@@ -63,6 +65,14 @@ data class EventDetails(
     ) {
         data class Status(val code: String)
     }
+    data class BoxOfficeInfo(
+        val openHoursDetail: String?,
+        val phoneNumberDetail: String?
+    )
+    data class GeneralInfo(
+        val childRule: String?,
+        val generalRule: String?
+    )
 }
 
 data class SeatMap(val staticUrl: String)
