@@ -21,7 +21,7 @@ data class EventDetails(
     )
     data class Embedded(
         val venues: List<Venues>,
-        val attractions : List<Attractions>
+        val attractions : List<Attractions>?
     ){
         data class Venues(
             val address: Address?,
@@ -57,7 +57,7 @@ data class EventDetails(
         }
     }
 
-    data class Attractions(val url: String)
+    data class Attractions(val url: String,val name:String)
 
     data class Dates(
         val start: Start,
