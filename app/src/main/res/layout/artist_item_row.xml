@@ -30,10 +30,6 @@
                 android:id="@+id/artist_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
                 android:textColor="@color/fontColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -46,6 +42,7 @@
                 tools:ignore="HardcodedText"
                 tools:text="Ed Sheeran" />
 
+
             <TextView
                 android:id="@+id/popularity_lbl"
                 android:layout_width="wrap_content"
@@ -53,9 +50,10 @@
                 android:textColor="@color/fontColor"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Popularity" />
-
+                android:text="Popularity" />
 
             <TextView
                 android:id="@+id/followers"
@@ -80,13 +78,48 @@
                 android:id="@+id/spotify_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/green"
                 android:textSize="16sp"
                 android:clickable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/followers"
                 tools:text="Check out on Spotify" />
+
+            <FrameLayout
+                android:id="@+id/goalProgressFrameLayout"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popularity_lbl">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/popularityProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:indicatorSize="70dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="#060606"
+                    app:trackThickness="10dp"
+                    app:indicatorColor="#8d203c"
+                    tools:indicatorColor="#8d203c"
+                    tools:progress="70" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/popularityValue_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="70" />
+
+            </FrameLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,5 +26,8 @@ class ArtistItemViewHolder(private val itemBinding: ArtistItemRowBinding) :
             intent.data = Uri.parse(item.external_urls.spotify)
             itemView.context.startActivity(intent)
         }
+
+        itemBinding.popularityProgress.progress = item.popularity
+        itemBinding.popularityValueTxt.text = item.popularity.toString()
     }
 }
