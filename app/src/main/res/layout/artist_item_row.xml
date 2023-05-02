@@ -7,14 +7,15 @@
     android:layout_marginStart="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:background="@drawable/artist_card_view_background"
     android:backgroundTint="@color/black"
+    android:orientation="vertical"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/training_row_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/artist_card_view_background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -47,13 +48,13 @@
                 android:id="@+id/popularity_lbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Popularity"
                 android:textColor="@color/fontColor"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Popularity" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/followers"
@@ -79,9 +80,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:clickable="true"
                 android:textColor="@color/green"
                 android:textSize="16sp"
-                android:clickable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/followers"
                 tools:text="Check out on Spotify" />
@@ -98,13 +99,13 @@
                     android:id="@+id/popularityProgress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:indicatorColor="#8d203c"
                     app:indicatorSize="70dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:trackColor="#060606"
                     app:trackThickness="10dp"
-                    app:indicatorColor="#8d203c"
                     tools:indicatorColor="#8d203c"
                     tools:progress="70" />
 
@@ -151,6 +152,100 @@
                 tools:ignore="HardcodedText" />
 
         </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/albumCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/album_card_view_background">
+
+        <TextView
+            android:id="@+id/popularAlbumLbl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:text="Popular Albums"
+            android:textColor="@color/fontColor"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/album1"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularAlbumLbl">
+
+            <ImageView
+                android:id="@+id/album1Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="trainingImage"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                tools:ignore="HardcodedText" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/album2"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/album1"
+            app:layout_constraintTop_toBottomOf="@+id/popularAlbumLbl">
+
+            <ImageView
+                android:id="@+id/album2Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="trainingImage"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                tools:ignore="HardcodedText" />
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/album3"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/album2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularAlbumLbl">
+
+            <ImageView
+                android:id="@+id/album3Image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="trainingImage"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                tools:ignore="HardcodedText" />
+
+        </androidx.cardview.widget.CardView>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
