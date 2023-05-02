@@ -46,12 +46,24 @@ class SearchFragment : Fragment() {
             clearEnteredData()
         }
 
+        binding.autoLocationSwitch.setOnClickListener {
+            setupAutoLocation()
+        }
+
         val arrayAdapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.category,
             R.layout.custom_drop_down
         )
         binding.categorySpinner.adapter = arrayAdapter
+    }
+
+    private fun setupAutoLocation() {
+        if (binding.autoLocationSwitch.isChecked) {
+            binding.locationEdittxt.visibility = View.GONE
+        } else {
+            binding.locationEdittxt.visibility = View.VISIBLE
+        }
     }
 
     private fun initSearchButtonClick() {
