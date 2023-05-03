@@ -1,5 +1,6 @@
 package com.ticket.master.eventfinder.eventTabs
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Paint
 import android.graphics.PorterDuff
@@ -78,8 +79,11 @@ class DetailsFragment : Fragment() {
             bindBuyTicketURL(event.url)
 
             if (event.priceRanges != null) {
+                val min_val =  event.priceRanges[0].min.toInt()
+                val max_val = event.priceRanges[0].max.toInt()
+
                 binding.priceRangeTxt.text =
-                    event.priceRanges[0].min.toString() + " - " + event.priceRanges[0].max.toString() + " (" + event.priceRanges[0].currency + ")"
+                    min_val.toString() + " - " + max_val.toString() + " (" + event.priceRanges[0].currency + ")"
             } else {
                 binding.priceRangeTxt.visibility = View.GONE
                 binding.priceRange.visibility = View.GONE
@@ -152,7 +156,7 @@ class DetailsFragment : Fragment() {
             }
         }
         binding.genresTxt.isSelected = true
-        binding.genresTxt.text = genre.joinToString("|")
+        binding.genresTxt.text = genre.joinToString(" | ")
     }
 
     private fun bindToolBar(name: String, url: String?) {
@@ -191,6 +195,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun bindTicketStatus(code: String) {
         val drawable =
             ContextCompat.getDrawable(requireContext(), R.drawable.ticket_status_background)
