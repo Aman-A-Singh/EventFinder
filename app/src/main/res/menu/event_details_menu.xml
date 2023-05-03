@@ -9,7 +9,7 @@
         />
     <item
         android:id="@+id/twitter"
-        android:icon="@drawable/twitter"
+        android:icon="@drawable/twitter2"
         android:title="Twitter"
         app:showAsAction="ifRoom"
         />
