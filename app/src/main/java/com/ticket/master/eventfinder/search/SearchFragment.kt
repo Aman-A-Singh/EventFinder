@@ -152,10 +152,26 @@ class SearchFragment : Fragment() {
     }
 
     private fun checkEnteredValues(): Boolean {
-        return !binding.keywordEdittxt.text.isEmpty() &&
-                !binding.distanceEdittxt.text.isEmpty() &&
-                if (binding.autoLocationSwitch.isChecked)
-                    true
-                else !binding.locationEdittxt.text.isEmpty()
+//        return !binding.keywordEdittxt.text.isEmpty() &&
+//                !binding.distanceEdittxt.text.isEmpty() &&
+//                if (binding.autoLocationSwitch.isChecked)
+//                    true
+//                else !binding.locationEdittxt.text.isEmpty()
+
+        if (binding.keywordEdittxt.text.isEmpty()){
+            binding.keywordEdittxt.setError("This field cannot be blank.")
+            return false
+        }
+
+        else if(binding.distanceEdittxt.text.isEmpty()){
+            binding.distanceEdittxt.setError("This field cannot be blank.")
+            return false
+        }
+        else if(!binding.autoLocationSwitch.isChecked && binding.locationEdittxt.text.isEmpty()){
+            binding.locationEdittxt.setError("This field cannot be blank.")
+            return false
+        }
+        return true
+
     }
 }
