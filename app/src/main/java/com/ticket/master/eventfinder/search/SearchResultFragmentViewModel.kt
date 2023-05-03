@@ -29,10 +29,4 @@ class SearchResultFragmentViewModel : ViewModel() {
             }
         }
     }
-//    fun getLocation(address: String) {
-//        viewModelScope.launch {
-//            val _location = LocationServiceApi.retrofitService1.getLocation(Constants.LOCATION_KEY, address)
-//            location.postValue(_location.results.get(0).geometry.location)
-//        }
-//    }
 }

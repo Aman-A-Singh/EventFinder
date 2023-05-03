@@ -12,7 +12,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
+import com.ticket.master.eventfinder.database.DataBaseViewModel
+import com.ticket.master.eventfinder.database.EventEntity
 import com.ticket.master.eventfinder.databinding.FragmentSearchResultBinding
+import org.w3c.dom.Entity
 
 class SearchResultFragment : Fragment() {
 
@@ -21,6 +24,7 @@ class SearchResultFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var eventListAdapter: SearchResultRecyclerViewAdapter
+    private lateinit var dataBaseViewModel: DataBaseViewModel
 
     private val args: SearchResultFragmentArgs by navArgs()
 
@@ -35,6 +39,7 @@ class SearchResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[SearchResultFragmentViewModel::class.java]
+        dataBaseViewModel = ViewModelProvider(this)[DataBaseViewModel::class.java]
         binding.searchResultToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -44,7 +49,7 @@ class SearchResultFragment : Fragment() {
 
     private fun configureRecyclerView() {
         eventListAdapter =
-            SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView))
+            SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView),dataBaseViewModel)
         binding.eventListRecyclerView.adapter = eventListAdapter
         binding.eventListRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewModel.getEvents(args.distance, args.category, args.keyword, args.geoHash)

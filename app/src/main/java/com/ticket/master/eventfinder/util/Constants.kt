@@ -17,4 +17,5 @@ object Constants {
 
     const val MAPVIEW_BUNDLE_KEY = "Map View Key"
 
+    const val EVENT_TABLE_NAME = "EventList_table"
 }
