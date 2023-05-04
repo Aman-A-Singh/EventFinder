@@ -22,6 +22,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.snackbar.Snackbar
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.database.DataBaseViewModel
 import com.ticket.master.eventfinder.database.EventEntity
@@ -214,9 +215,23 @@ class DetailsFragment : Fragment() {
                     R.id.favorites -> {
                         if (databaseViewModel.isFavorite(eventEntity.id)) {
                             it.setIcon(R.drawable.heart_outline)
+                            var snackbar =
+                                Snackbar.make(
+                                    binding.eventDetailsCardView,
+                                    eventEntity.name + " removed from favriotes",
+                                    Snackbar.LENGTH_LONG
+                                )
+                            snackbar.show()
                             databaseViewModel.removeEvent(eventEntity)
                         } else {
                             it.setIcon(R.drawable.heart_filled)
+                            var snackbar =
+                                Snackbar.make(
+                                    binding.eventDetailsCardView,
+                                    eventEntity.name + " added to favriotes",
+                                    Snackbar.LENGTH_LONG
+                                )
+                            snackbar.show()
                             databaseViewModel.insert(eventEntity)
                         }
                         true
