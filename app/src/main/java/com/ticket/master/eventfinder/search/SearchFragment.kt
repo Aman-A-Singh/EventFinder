@@ -119,7 +119,7 @@ class SearchFragment : Fragment() {
     private fun initAutoSuggesstion() {
 
         viewModel.stringList.observe(viewLifecycleOwner) {
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, it)
+            val adapter = ArrayAdapter(requireContext(), R.layout.custom_autocomplete_drop_down, it)
             binding.keywordEdittxt.setAdapter(adapter)
         }
 
