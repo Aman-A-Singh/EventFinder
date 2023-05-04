@@ -26,4 +26,9 @@
     <color name="cancelled">#000000</color>
     <color name="postponed_rescheduled">#FFA500</color>
 
+    <color name="disable_foreground_grey">#42221f1f</color>
+    <color name="disable_thumb_grey">#1c000000</color>
+    <color name="enable_thumb_green">#57AF2E</color>
+
+
 </resources>
