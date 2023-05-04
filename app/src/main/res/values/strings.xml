@@ -11,4 +11,5 @@
         <item>Miscellaneous</item>
     </string-array>
     <string name="check_on_spotify_text"><u>Check on Spotify</u></string>
+    <string name="artist_unavailable">Artist/Music data unavailable</string>
 </resources>
