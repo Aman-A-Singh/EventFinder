@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class SearchResultFragmentViewModel : ViewModel() {
     val eventList: MutableLiveData<List<EventItem>> = MutableLiveData()
-    val location= MutableLiveData<LocationX>()
+    val location = MutableLiveData<LocationX>()
     val uiState: MutableLiveData<UIState> = MutableLiveData(UIState.INPROGREES)
 
     fun getEvents(radius: Int, category: String, keyword: String, geoHash: String) {
@@ -35,14 +35,22 @@ class SearchResultFragmentViewModel : ViewModel() {
     }
 
     fun getLocation(address: String?) {
-        if(address!=null){
+        if (address != null) {
             viewModelScope.launch {
-                val _location = LocationServiceApi.retrofitService1.getLocation(Constants.LOCATION_KEY, address)
-                location.postValue(_location.results.get(0).geometry.location)
+                try {
+                    val _location = LocationServiceApi.retrofitService1.getLocation(
+                        Constants.LOCATION_KEY,
+                        address
+                    )
+                    location.postValue(_location.results.get(0).geometry.location)
+                } catch (e: Exception) {
+                    uiState.postValue(UIState.ERROR)
+                }
             }
-        }else{
+        } else {
             viewModelScope.launch {
-                val ipInfo = LocationServiceApi.retrofitService2.getAutoLocation(Constants.AUTO_LOCATION_IP_KEY)
+                val ipInfo =
+                    LocationServiceApi.retrofitService2.getAutoLocation(Constants.AUTO_LOCATION_IP_KEY)
                 val splitString = ipInfo.loc.split(",")
                 val _location = LocationX(splitString[0].toDouble(), splitString[1].toDouble())
                 location.postValue(_location)
