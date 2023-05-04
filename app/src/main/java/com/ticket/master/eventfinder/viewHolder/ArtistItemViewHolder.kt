@@ -2,6 +2,7 @@ package com.ticket.master.eventfinder.viewHolder
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -10,12 +11,35 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ticket.master.eventfinder.databinding.ArtistItemRowBinding
 import com.ticket.master.eventfinder.models.artist.Album
 import com.ticket.master.eventfinder.models.artist.ArtistDetail
+import java.text.NumberFormat
+import java.util.Locale
 
 class ArtistItemViewHolder(private val itemBinding: ArtistItemRowBinding) :
     RecyclerView.ViewHolder(itemBinding.root) {
 
+    fun shorthand(number: Double): String {
+        val suffixes = arrayOf("", "K", "M", "B", "T") // Define the suffixes
+        var value = number
+        var index = 0
+        while (value >= 1000 && index < suffixes.size - 1) { // Loop through the suffixes
+            value /= 1000
+            index++
+        }
+        return "%.0f%s".format(value, suffixes[index]) // Return the shorthand expression
+    }
+
+
     fun bind(item: ArtistDetail) {
         itemBinding.artistName.text = item.name
+
+
+//        val myString = NumberFormat.getInstance(Locale.US).format(item.followers.total);
+
+        val number = item.followers.total.toDouble()
+        val myString = shorthand(number)
+
+        itemBinding.followers.text = myString
+        Log.d("Followers", myString)
 
         Glide.with(itemBinding.artistImage.context)
             .load(item.images[0].url)
