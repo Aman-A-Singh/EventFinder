@@ -16,6 +16,7 @@ import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
 import com.ticket.master.eventfinder.models.event.EventDetails
 import com.ticket.master.eventfinder.util.Constants.MAPVIEW_BUNDLE_KEY
 import com.ticket.master.eventfinder.util.UIState
+import com.ticket.master.eventfinder.utility.setResizableText
 
 
 class VenueFragment : Fragment(), OnMapReadyCallback {
@@ -110,8 +111,9 @@ class VenueFragment : Fragment(), OnMapReadyCallback {
 
     private fun bindRules(venuDetails: EventDetails.Embedded.Venues) {
         val boxOfficeInfo = venuDetails.boxOfficeInfo
-        if (boxOfficeInfo != null) {
+        if (boxOfficeInfo != null && boxOfficeInfo.openHoursDetail!=null) {
             binding.openHoursValueText.text = boxOfficeInfo.openHoursDetail
+            binding.openHoursValueText.setResizableText(boxOfficeInfo.openHoursDetail,4,true)
         } else {
             binding.openHoursValueText.visibility = View.GONE
             binding.openHoursText.visibility = View.GONE
@@ -120,12 +122,15 @@ class VenueFragment : Fragment(), OnMapReadyCallback {
         if (generalInfo != null) {
             if (generalInfo.generalRule != null) {
                 binding.generalInfoValueText.text = generalInfo.generalRule
+                binding.generalInfoValueText.setResizableText(generalInfo.generalRule,4,true)
             } else {
                 binding.generalInfoText.visibility = View.GONE
                 binding.generalInfoValueText.visibility = View.GONE
             }
             if (generalInfo.childRule != null) {
                 binding.childRulesValueText.text = generalInfo.childRule
+                binding.childRulesValueText.setResizableText(generalInfo.childRule,4,true)
+
             } else {
                 binding.childRulesText.visibility = View.GONE
                 binding.childRulesValueText.visibility = View.GONE
