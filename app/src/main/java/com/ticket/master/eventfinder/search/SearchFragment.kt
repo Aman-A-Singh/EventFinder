@@ -152,11 +152,6 @@ class SearchFragment : Fragment() {
     }
 
     private fun checkEnteredValues(): Boolean {
-//        return !binding.keywordEdittxt.text.isEmpty() &&
-//                !binding.distanceEdittxt.text.isEmpty() &&
-//                if (binding.autoLocationSwitch.isChecked)
-//                    true
-//                else !binding.locationEdittxt.text.isEmpty()
 
         if (binding.keywordEdittxt.text.isEmpty()){
             binding.keywordEdittxt.setError("This field cannot be blank.")
@@ -173,5 +168,12 @@ class SearchFragment : Fragment() {
         }
         return true
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(binding.autoLocationSwitch.isChecked){
+            binding.locationEdittxt.visibility = View.GONE
+        }
     }
 }
