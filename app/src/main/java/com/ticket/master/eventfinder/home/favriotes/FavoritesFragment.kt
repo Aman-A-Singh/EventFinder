@@ -46,6 +46,11 @@ class FavoritesFragment : Fragment() {
         binding.favorioteEventListRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewModel.favoritesEventList.observe(viewLifecycleOwner) { eventList ->
             eventListAdapter.submitList(eventList)
+            if (eventList.size == 0) {
+                binding.noFavoritesInfo.visibility = View.VISIBLE
+            }else{
+                binding.noFavoritesInfo.visibility = View.GONE
+            }
         }
         val swipeToDeleteCallback = SwipeToDeleteCallback(eventListAdapter)
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)

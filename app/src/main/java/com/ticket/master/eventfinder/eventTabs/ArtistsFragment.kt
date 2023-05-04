@@ -36,6 +36,7 @@ class ArtistsFragment : Fragment() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 UIState.INPROGREES -> {
+                    binding.noArtistInfo.visibility = View.GONE
                     binding.intermediateProgressBar.visibility = View.VISIBLE
                 }
                 UIState.COMPLETED -> {
@@ -44,7 +45,7 @@ class ArtistsFragment : Fragment() {
                 }
 
                 UIState.ERROR -> {
-
+                    binding.noArtistInfo.visibility = View.VISIBLE
                 }
             }
         }
@@ -62,7 +63,7 @@ class ArtistsFragment : Fragment() {
             if (performers.size > 0) {
                 viewModel.getArtists(performers)
             }else{
-
+                binding.noArtistInfo.visibility = View.VISIBLE
             }
         }
     }

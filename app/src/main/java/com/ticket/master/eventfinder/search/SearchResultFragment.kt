@@ -45,6 +45,7 @@ class SearchResultFragment : Fragment() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 UIState.INPROGREES -> {
+                    binding.noEventInfo.visibility = View.GONE
                     binding.intermediateProgressBar.visibility = View.VISIBLE
                 }
                 UIState.COMPLETED -> {
@@ -53,6 +54,7 @@ class SearchResultFragment : Fragment() {
 
                 UIState.ERROR -> {
                     binding.intermediateProgressBar.visibility = View.GONE
+                    binding.noEventInfo.visibility = View.VISIBLE
                 }
             }
         }
