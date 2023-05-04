@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.ticket.master.eventfinder.adapter.FragmentItems
 import com.ticket.master.eventfinder.adapter.ViewPagerAdapter
 import com.ticket.master.eventfinder.databinding.FragmentHomeBinding
+import com.ticket.master.eventfinder.home.favriotes.FavoritesFragment
 
 class HomeFragment : Fragment() {
 

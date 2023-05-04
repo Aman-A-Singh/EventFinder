@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.FavoritesFragment">
+    tools:context=".home.favriotes.FavoritesFragment"
+    android:background="@color/backgroundColor">
 
-    <include layout="@layout/empty_view"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorioteEventListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:listitem="@layout/event_item_row"/>
 
 </FrameLayout>

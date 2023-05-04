@@ -19,4 +19,7 @@ interface EventDao {
 
     @Delete
     suspend fun removeEvent(event: EventEntity)
+
+    @Query("SELECT * FROM $EVENT_TABLE_NAME")
+    fun getEventLiveData(): LiveData<List<EventEntity>>
 }

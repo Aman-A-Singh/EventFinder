@@ -29,9 +29,11 @@ class EventItemViewHolder(
     fun bind(eventData: EventItem) {
         itemBinding.eventTitle.text = eventData.name
         val dateFormat = SimpleDateFormat("MM/dd/yyyy")
-        itemBinding.date.text = dateFormat.format(eventData.dates.start.date)
+        val date = dateFormat.format(eventData.dates.start.date)
+        itemBinding.date.text = date
         val timeFormat = SimpleDateFormat("h:mm a")
-        itemBinding.timeTxt.text = timeFormat.format(eventData.dates.start.time)
+        val time = timeFormat.format(eventData.dates.start.time)
+        itemBinding.timeTxt.text = time
         itemBinding.locationTxt.text = eventData._embedded.venues[0].name
         itemBinding.eventType.text = eventData.classifications[0].segment.name
 
@@ -49,12 +51,13 @@ class EventItemViewHolder(
             itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_filled)
         }
         itemBinding.addFavoritesImage.setOnClickListener {
+            val eventEntity = EventEntity(eventData.id,eventData.name,date,time,eventData._embedded.venues[0].name,eventData.classifications[0].segment.name,eventData.images[6].url)
             if (dataBaseViewModel.isFavorite(eventData.id)) {
                 itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_outline)
-                dataBaseViewModel.removeEvent(EventEntity(eventData.id))
+                dataBaseViewModel.removeEvent(eventEntity)
             } else {
                 itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_filled)
-                dataBaseViewModel.insert(EventEntity(eventData.id))
+                dataBaseViewModel.insert(eventEntity)
             }
         }
     }

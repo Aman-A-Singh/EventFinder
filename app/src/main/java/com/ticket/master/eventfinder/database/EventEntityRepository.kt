@@ -1,12 +1,10 @@
 package com.ticket.master.eventfinder.database
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class EventEntityRepository(val eventEntityDao: EventDao) {
+
+    val favoritesEventList: LiveData<List<EventEntity>> = eventEntityDao.getEventLiveData()
 
     suspend fun insert(event: EventEntity) {
         eventEntityDao.insertEvent(event)
@@ -19,4 +17,5 @@ class EventEntityRepository(val eventEntityDao: EventDao) {
     suspend fun getEventList():List<EventEntity> {
         return  eventEntityDao.getEventList()
     }
+
 }
