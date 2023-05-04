@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.snackbar.Snackbar
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.database.DataBaseViewModel
 import com.ticket.master.eventfinder.database.EventEntity
@@ -51,13 +52,35 @@ class EventItemViewHolder(
             itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_filled)
         }
         itemBinding.addFavoritesImage.setOnClickListener {
-            val eventEntity = EventEntity(eventData.id,eventData.name,date,time,eventData._embedded.venues[0].name,eventData.classifications[0].segment.name,eventData.images[6].url)
+            val eventEntity = EventEntity(
+                eventData.id,
+                eventData.name,
+                date,
+                time,
+                eventData._embedded.venues[0].name,
+                eventData.classifications[0].segment.name,
+                eventData.images[6].url
+            )
             if (dataBaseViewModel.isFavorite(eventData.id)) {
                 itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_outline)
                 dataBaseViewModel.removeEvent(eventEntity)
+                var snackbar =
+                    Snackbar.make(
+                        itemView,
+                        eventData.name + " removed from favriotes",
+                        Snackbar.LENGTH_LONG
+                    )
+                snackbar.show()
             } else {
                 itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_filled)
                 dataBaseViewModel.insert(eventEntity)
+                var snackbar =
+                    Snackbar.make(
+                        itemView,
+                        eventData.name + " added to favriotes",
+                        Snackbar.LENGTH_LONG
+                    )
+                snackbar.show()
             }
         }
     }

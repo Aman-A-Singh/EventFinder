@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.google.android.material.snackbar.Snackbar
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.database.EventEntity
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
@@ -39,6 +40,12 @@ class FavriotesEventItemViewHolder(
         itemBinding.addFavoritesImage.setImageResource(R.drawable.heart_filled)
         itemBinding.addFavoritesImage.setOnClickListener {
             viewModel.removeEvent(eventEntity)
+            var snackbar =
+                Snackbar.make(
+                    itemView,
+                    eventEntity.name + " removed from favriotes",
+                    Snackbar.LENGTH_LONG
+                ).show()
         }
     }
 }
