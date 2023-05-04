@@ -23,7 +23,10 @@ class DataBaseViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun insert(event: EventEntity) =
-        viewModelScope.launch(Dispatchers.IO) { eventRepository.insert(event) }
+        viewModelScope.launch(Dispatchers.IO) {
+            eventRepository.insert(event)
+            updateList()
+        }
 
     fun isFavorite(id: String): Boolean {
         allEventList.map {
@@ -34,6 +37,15 @@ class DataBaseViewModel(application: Application) : AndroidViewModel(application
         return false
     }
 
+    private fun updateList() {
+        CoroutineScope(Dispatchers.Main).launch {
+            allEventList = eventRepository.getEventList()
+        }
+    }
+
     fun removeEvent(event: EventEntity) =
-        viewModelScope.launch(Dispatchers.IO) { eventRepository.removeEvent(event) }
+        viewModelScope.launch(Dispatchers.IO) {
+            eventRepository.removeEvent(event)
+            updateList()
+        }
 }

@@ -28,7 +28,7 @@ data class EventDetails(
             val city: City?,
             val country: Country?,
             val location: Location?,
-            val name: String?,
+            val name: String,
             val postalCode: String?,
             val state: State?,
             val url: String?,

@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ticket.master.eventfinder.R
+import com.ticket.master.eventfinder.common.SwipeToDeleteCallback
 import com.ticket.master.eventfinder.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
@@ -36,12 +38,18 @@ class FavoritesFragment : Fragment() {
 
     private fun configureRecyclerView() {
         eventListAdapter =
-            FavriotesEventItemAdapter(requireActivity().findNavController(R.id.fragmentContainerView),viewModel)
+            FavriotesEventItemAdapter(
+                requireActivity().findNavController(R.id.fragmentContainerView),
+                viewModel
+            )
         binding.favorioteEventListRecyclerView.adapter = eventListAdapter
         binding.favorioteEventListRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewModel.favoritesEventList.observe(viewLifecycleOwner) { eventList ->
             eventListAdapter.submitList(eventList)
         }
+        val swipeToDeleteCallback = SwipeToDeleteCallback(eventListAdapter)
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(binding.favorioteEventListRecyclerView)
     }
 
     override fun onDestroy() {

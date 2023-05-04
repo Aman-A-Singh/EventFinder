@@ -27,4 +27,8 @@ class FavriotesEventItemAdapter(
     override fun onBindViewHolder(holder: FavriotesEventItemViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun deleteItem(position: Int) {
+        dataBaseViewModel.removeEvent(getItem(position))
+    }
 }
