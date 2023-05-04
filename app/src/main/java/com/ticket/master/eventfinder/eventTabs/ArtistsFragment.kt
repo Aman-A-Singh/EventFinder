@@ -39,6 +39,7 @@ class ArtistsFragment : Fragment() {
                     binding.noArtistInfo.visibility = View.GONE
                     binding.intermediateProgressBar.visibility = View.VISIBLE
                 }
+
                 UIState.COMPLETED -> {
                     binding.intermediateProgressBar.visibility = View.GONE
                     initUI()
@@ -62,8 +63,6 @@ class ArtistsFragment : Fragment() {
             }
             if (performers.size > 0) {
                 viewModel.getArtists(performers)
-            }else{
-                binding.noArtistInfo.visibility = View.VISIBLE
             }
         }
     }
@@ -73,7 +72,12 @@ class ArtistsFragment : Fragment() {
         binding.artistRecyclerView.adapter = artistListAdapter
         binding.artistRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewModel.artistList.observe(viewLifecycleOwner) { eventList ->
-            artistListAdapter.submitList(eventList)
+            if (eventList.size > 0) {
+                binding.noArtistInfo.visibility = View.GONE
+                artistListAdapter.submitList(eventList)
+            } else {
+                binding.noArtistInfo.visibility = View.VISIBLE
+            }
         }
     }
 }

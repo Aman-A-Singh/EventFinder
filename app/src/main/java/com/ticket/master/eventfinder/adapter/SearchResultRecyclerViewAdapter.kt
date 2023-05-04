@@ -1,6 +1,5 @@
 package com.ticket.master.eventfinder.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
