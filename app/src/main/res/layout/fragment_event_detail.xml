@@ -22,7 +22,6 @@
             android:layout_height="match_parent"
             android:textColor="@color/green"
             style="@style/GreenText"
-            android:text="Helloooooooooooooooooooooo"
             android:textSize="20sp"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"

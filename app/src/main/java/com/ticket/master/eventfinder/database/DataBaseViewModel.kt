@@ -11,15 +11,17 @@ import kotlinx.coroutines.launch
 
 class DataBaseViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var allEventList: List<EventEntity>
+    val favoritesEventList: LiveData<List<EventEntity>>
     private val eventRepository: EventEntityRepository
 
     init {
         val db = EventEntityDatabase.getInstance(application)
         val dao = db.eventEntityDao()
         eventRepository = EventEntityRepository(dao)
-        CoroutineScope(Dispatchers.Main).launch {
+        viewModelScope.launch {
             allEventList = eventRepository.getEventList()
         }
+        favoritesEventList = eventRepository.favoritesEventList
     }
 
     fun insert(event: EventEntity) =

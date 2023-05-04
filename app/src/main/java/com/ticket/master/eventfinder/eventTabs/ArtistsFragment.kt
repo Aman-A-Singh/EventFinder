@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.ArtistRecyclerViewAdapter
 import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
+import com.ticket.master.eventfinder.databinding.EmptyViewBinding
 import com.ticket.master.eventfinder.databinding.FragmentArtistsBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
 import com.ticket.master.eventfinder.util.UIState
@@ -20,6 +21,7 @@ class ArtistsFragment : Fragment() {
     private lateinit var _binding: FragmentArtistsBinding
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<EventDetailsViewModel>()
+    private lateinit var emptyViewBinding: EmptyViewBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,12 +35,17 @@ class ArtistsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
-                UIState.INPROGREES -> {}
+                UIState.INPROGREES -> {
+                    binding.intermediateProgressBar.visibility = View.VISIBLE
+                }
                 UIState.COMPLETED -> {
+                    binding.intermediateProgressBar.visibility = View.GONE
                     initUI()
                 }
 
-                UIState.ERROR -> {}
+                UIState.ERROR -> {
+
+                }
             }
         }
         configureRecyclerView()
@@ -54,6 +61,8 @@ class ArtistsFragment : Fragment() {
             }
             if (performers.size > 0) {
                 viewModel.getArtists(performers)
+            }else{
+
             }
         }
     }

@@ -8,12 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.ticket.master.eventfinder.models.event.EventItem
 import com.ticket.master.eventfinder.models.location.LocationX
 import com.ticket.master.eventfinder.services.EventService
+import com.ticket.master.eventfinder.util.UIState
 import kotlinx.coroutines.launch
 
 class SearchResultFragmentViewModel : ViewModel() {
     val eventList: MutableLiveData<List<EventItem>> = MutableLiveData()
     private val _location = MutableLiveData<LocationX>()
-    val location : LiveData<LocationX> = _location
+    val location: LiveData<LocationX> = _location
+    val uiState: MutableLiveData<UIState> = MutableLiveData(UIState.INPROGREES)
 
     fun getEvents(radius: Int, category: String, keyword: String, geoHash: String) {
         viewModelScope.launch {
@@ -24,8 +26,9 @@ class SearchResultFragmentViewModel : ViewModel() {
                     keyword,
                     geoHash
                 )
-            }catch (e: Exception) {
-                Log.d("Tag","Exception")
+                uiState.postValue(UIState.COMPLETED)
+            } catch (e: Exception) {
+                uiState.postValue(UIState.ERROR)
             }
         }
     }

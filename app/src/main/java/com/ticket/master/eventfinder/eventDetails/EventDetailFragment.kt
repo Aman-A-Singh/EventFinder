@@ -36,7 +36,7 @@ class EventDetailFragment : Fragment() {
         binding.eventDetailsToolBar.inflateMenu(R.menu.event_details_menu)
         viewModel.uiState.value = UIState.INPROGREES
         viewModel.getEventData(args.eventId)
-
+        viewModel.isFavriote.value = args.isFavorite
         binding.eventDetailsToolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }

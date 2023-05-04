@@ -13,9 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
 import com.ticket.master.eventfinder.database.DataBaseViewModel
-import com.ticket.master.eventfinder.database.EventEntity
 import com.ticket.master.eventfinder.databinding.FragmentSearchResultBinding
-import org.w3c.dom.Entity
+import com.ticket.master.eventfinder.util.UIState
 
 class SearchResultFragment : Fragment() {
 
@@ -42,6 +41,20 @@ class SearchResultFragment : Fragment() {
         dataBaseViewModel = ViewModelProvider(this)[DataBaseViewModel::class.java]
         binding.searchResultToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
+        }
+        viewModel.uiState.observe(viewLifecycleOwner) {
+            when (it) {
+                UIState.INPROGREES -> {
+                    binding.intermediateProgressBar.visibility = View.VISIBLE
+                }
+                UIState.COMPLETED -> {
+                    binding.intermediateProgressBar.visibility = View.GONE
+                }
+
+                UIState.ERROR -> {
+                    binding.intermediateProgressBar.visibility = View.GONE
+                }
+            }
         }
         //Set up the recycler view
         configureRecyclerView()

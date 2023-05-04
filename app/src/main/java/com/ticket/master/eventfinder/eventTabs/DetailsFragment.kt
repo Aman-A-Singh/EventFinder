@@ -38,7 +38,6 @@ class DetailsFragment : Fragment() {
     private lateinit var _binding: FragmentDetailsBinding
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<EventDetailsViewModel>()
-    private lateinit var databaseViewModel: DataBaseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,28 +49,30 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        databaseViewModel = ViewModelProvider(this)[DataBaseViewModel::class.java]
         binding.artistTeamsTxt.isSelected = true
         binding.buyTicketAtText.isSelected = true
         binding.buyTicketAtText.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
-                UIState.INPROGREES -> binding.eventDetailsCardView.visibility = View.GONE
+                UIState.INPROGREES -> {
+                    binding.eventDetailsCardView.visibility = View.GONE
+                    binding.intermediateProgressBar.visibility = View.VISIBLE
+                }
+
                 UIState.COMPLETED -> {
                     binding.eventDetailsCardView.visibility = View.VISIBLE
+                    binding.intermediateProgressBar.visibility = View.GONE
                     bind()
                 }
 
-                UIState.ERROR -> binding.artistTeamsTxt.text = "Errorrrrrrrrr"
+                UIState.ERROR -> {}
             }
         }
     }
 
     private fun bind() {
         viewModel.eventData.let { event ->
-
-
             binding.artistTeamsTxt.text = event.name
             val venue = event._embedded.venues[0].name
             binding.venueTxt.text = venue
@@ -185,12 +186,12 @@ class DetailsFragment : Fragment() {
         toolbarTitle?.text = eventEntity.name
         val toolbar =
             requireParentFragment().view?.findViewById<Toolbar>(R.id.eventDetailsToolBar)
-
-        if (databaseViewModel.isFavorite(eventEntity.id)) {
+        if (viewModel.isFavriote.value == true) {
             toolbar?.menu?.findItem(R.id.favorites)?.setIcon(R.drawable.heart_filled)
         } else {
             toolbar?.menu?.findItem(R.id.favorites)?.setIcon(R.drawable.heart_outline)
         }
+
 
         if (url != null) {
             toolbar?.setOnMenuItemClickListener {
@@ -213,7 +214,7 @@ class DetailsFragment : Fragment() {
                     }
 
                     R.id.favorites -> {
-                        if (databaseViewModel.isFavorite(eventEntity.id)) {
+                        if (viewModel.isFavriote.value === true) {
                             it.setIcon(R.drawable.heart_outline)
                             var snackbar =
                                 Snackbar.make(
@@ -222,7 +223,8 @@ class DetailsFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                             snackbar.show()
-                            databaseViewModel.removeEvent(eventEntity)
+                            viewModel.isFavriote.postValue(false)
+                            viewModel.removeEvent(eventEntity)
                         } else {
                             it.setIcon(R.drawable.heart_filled)
                             var snackbar =
@@ -232,7 +234,8 @@ class DetailsFragment : Fragment() {
                                     Snackbar.LENGTH_LONG
                                 )
                             snackbar.show()
-                            databaseViewModel.insert(eventEntity)
+                            viewModel.isFavriote.postValue(true)
+                            viewModel.insert(eventEntity)
                         }
                         true
                     }

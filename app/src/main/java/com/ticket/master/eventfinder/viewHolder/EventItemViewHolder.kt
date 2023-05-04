@@ -44,7 +44,11 @@ class EventItemViewHolder(
             .into(itemBinding.eventImage)
 
         itemView.setOnClickListener {
-            val bundle = bundleOf(Constants.ARG_EVENT_ID to eventData.id)
+            var isFavorite  = false
+            if (dataBaseViewModel.isFavorite(eventData.id)) {
+                isFavorite = true
+            }
+            val bundle = bundleOf(Constants.ARG_EVENT_ID to eventData.id,Constants.ARG_IS_FAVRoITE to isFavorite)
             navController.navigate(R.id.action_homeFragment_to_eventDetailFragment, bundle)
         }
 
