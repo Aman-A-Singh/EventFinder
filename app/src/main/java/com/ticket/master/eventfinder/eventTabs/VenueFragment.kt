@@ -79,6 +79,10 @@ class VenueFragment : Fragment(), OnMapReadyCallback {
     private fun bindMapCardView(venue: EventDetails.Embedded.Venues) {
         var addressText: String? = null
         var city_state: String? = null
+        var venue_name: String? = null
+        if (venue.name != null){
+            venue_name = venue.name
+        }
         if (venue.address != null) {
             addressText = venue.address.line1
         }
@@ -90,6 +94,7 @@ class VenueFragment : Fragment(), OnMapReadyCallback {
             addressText = addressText + ", " + venue.state.name
             city_state = city_state + ", " + venue.state.name
         }
+        binding.venueName.text = venue_name
         binding.cityStateTxt.isSelected = true
         binding.addressTxt.text = addressText
         binding.cityStateTxt.text = city_state
