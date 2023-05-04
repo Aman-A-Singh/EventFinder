@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,7 +18,7 @@ class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: FavoritesFragmentViewModel
+    private val viewModel by activityViewModels<FavoritesFragmentViewModel>()
     private lateinit var eventListAdapter: FavriotesEventItemAdapter
 
     override fun onCreateView(
@@ -31,8 +32,6 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[FavoritesFragmentViewModel::class.java]
-
         configureRecyclerView()
     }
 

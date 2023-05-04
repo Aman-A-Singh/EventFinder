@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
 import com.ticket.master.eventfinder.database.DataBaseViewModel
 import com.ticket.master.eventfinder.databinding.FragmentSearchResultBinding
+import com.ticket.master.eventfinder.home.favriotes.FavoritesFragmentViewModel
 import com.ticket.master.eventfinder.util.UIState
 
 class SearchResultFragment : Fragment() {
@@ -24,7 +26,7 @@ class SearchResultFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var eventListAdapter: SearchResultRecyclerViewAdapter
-    private lateinit var dataBaseViewModel: DataBaseViewModel
+    private val sharedViewModel by activityViewModels<FavoritesFragmentViewModel>()
 
     private val args: SearchResultFragmentArgs by navArgs()
 
@@ -40,7 +42,7 @@ class SearchResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[SearchResultFragmentViewModel::class.java]
         viewModel.getLocation(args.address)
-        dataBaseViewModel = ViewModelProvider(this)[DataBaseViewModel::class.java]
+//        sharedViewModel = ViewModelProvider(this)[FavoritesFragmentViewModel::class.java]
         binding.searchResultToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -62,11 +64,15 @@ class SearchResultFragment : Fragment() {
         }
         //Set up the recycler view
         configureRecyclerView()
+
+        sharedViewModel.favoritesEventList.observe(viewLifecycleOwner){
+            configureRecyclerView()
+        }
     }
 
     private fun configureRecyclerView() {
         eventListAdapter =
-            SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView),dataBaseViewModel)
+            SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView),sharedViewModel)
         binding.eventListRecyclerView.adapter = eventListAdapter
         binding.eventListRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewModel.location.observe(viewLifecycleOwner){location->
@@ -78,5 +84,4 @@ class SearchResultFragment : Fragment() {
             eventListAdapter.submitList(eventList)
         }
     }
-
 }

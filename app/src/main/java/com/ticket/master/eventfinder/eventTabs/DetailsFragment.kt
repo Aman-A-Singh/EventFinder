@@ -28,6 +28,7 @@ import com.ticket.master.eventfinder.database.DataBaseViewModel
 import com.ticket.master.eventfinder.database.EventEntity
 import com.ticket.master.eventfinder.databinding.FragmentDetailsBinding
 import com.ticket.master.eventfinder.eventDetails.EventDetailsViewModel
+import com.ticket.master.eventfinder.home.favriotes.FavoritesFragmentViewModel
 import com.ticket.master.eventfinder.models.event.EventDetails
 import com.ticket.master.eventfinder.util.UIState
 import java.text.SimpleDateFormat
@@ -38,6 +39,7 @@ class DetailsFragment : Fragment() {
     private lateinit var _binding: FragmentDetailsBinding
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<EventDetailsViewModel>()
+    private val favoritesViewModel by activityViewModels<FavoritesFragmentViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -224,7 +226,7 @@ class DetailsFragment : Fragment() {
                                 )
                             snackbar.show()
                             viewModel.isFavriote.postValue(false)
-                            viewModel.removeEvent(eventEntity)
+                            favoritesViewModel.removeEvent(eventEntity)
                         } else {
                             it.setIcon(R.drawable.heart_filled)
                             var snackbar =
@@ -235,7 +237,7 @@ class DetailsFragment : Fragment() {
                                 )
                             snackbar.show()
                             viewModel.isFavriote.postValue(true)
-                            viewModel.insert(eventEntity)
+                            favoritesViewModel.insert(eventEntity)
                         }
                         true
                     }

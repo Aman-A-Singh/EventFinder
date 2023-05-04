@@ -1,6 +1,8 @@
 package com.ticket.master.eventfinder.viewHolder
 
 import androidx.core.os.bundleOf
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,6 +12,7 @@ import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.database.DataBaseViewModel
 import com.ticket.master.eventfinder.database.EventEntity
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
+import com.ticket.master.eventfinder.home.favriotes.FavoritesFragmentViewModel
 import com.ticket.master.eventfinder.models.event.EventItem
 import com.ticket.master.eventfinder.util.Constants
 import java.text.SimpleDateFormat
@@ -18,7 +21,7 @@ import java.text.SimpleDateFormat
 class EventItemViewHolder(
     private val itemBinding: EventItemRowBinding,
     private val navController: NavController,
-    val dataBaseViewModel: DataBaseViewModel
+    val dataBaseViewModel: FavoritesFragmentViewModel
 ) :
     RecyclerView.ViewHolder(itemBinding.root) {
     fun bind(eventData: EventItem) {
@@ -38,11 +41,14 @@ class EventItemViewHolder(
             .into(itemBinding.eventImage)
 
         itemView.setOnClickListener {
-            var isFavorite  = false
+            var isFavorite = false
             if (dataBaseViewModel.isFavorite(eventData.id)) {
                 isFavorite = true
             }
-            val bundle = bundleOf(Constants.ARG_EVENT_ID to eventData.id,Constants.ARG_IS_FAVRIOTE to isFavorite)
+            val bundle = bundleOf(
+                Constants.ARG_EVENT_ID to eventData.id,
+                Constants.ARG_IS_FAVRIOTE to isFavorite
+            )
             navController.navigate(R.id.action_homeFragment_to_eventDetailFragment, bundle)
         }
 
