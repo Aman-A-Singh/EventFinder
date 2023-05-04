@@ -10,4 +10,5 @@
         <item>Film</item>
         <item>Miscellaneous</item>
     </string-array>
+    <string name="check_on_spotify_text"><u>Check on Spotify</u></string>
 </resources>
