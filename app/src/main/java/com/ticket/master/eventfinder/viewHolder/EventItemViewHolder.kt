@@ -1,7 +1,5 @@
 package com.ticket.master.eventfinder.viewHolder
 
-import android.content.Context
-import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
@@ -11,13 +9,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.database.DataBaseViewModel
 import com.ticket.master.eventfinder.database.EventEntity
-import com.ticket.master.eventfinder.database.EventEntityRepository
 import com.ticket.master.eventfinder.databinding.EventItemRowBinding
 import com.ticket.master.eventfinder.models.event.EventItem
 import com.ticket.master.eventfinder.util.Constants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 
 
@@ -48,7 +42,7 @@ class EventItemViewHolder(
             if (dataBaseViewModel.isFavorite(eventData.id)) {
                 isFavorite = true
             }
-            val bundle = bundleOf(Constants.ARG_EVENT_ID to eventData.id,Constants.ARG_IS_FAVRoITE to isFavorite)
+            val bundle = bundleOf(Constants.ARG_EVENT_ID to eventData.id,Constants.ARG_IS_FAVRIOTE to isFavorite)
             navController.navigate(R.id.action_homeFragment_to_eventDetailFragment, bundle)
         }
 

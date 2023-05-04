@@ -70,20 +70,20 @@ class SearchFragment : Fragment() {
         binding.searchBtn.setOnClickListener {
 
             if (checkEnteredValues()) {
+                var bundle = getInfo()
                 val address: String?
                 if (!binding.autoLocationSwitch.isChecked) {
                     address = binding.locationEdittxt.text.toString().trim()
-                } else {
-                    address = null
+                    bundle.putString(Constants.ARG_ADDRESS, address)
+                }else{
+                    bundle.putString(Constants.ARG_ADDRESS, null)
                 }
-                var bundle = getInfo()
-                viewModel.getLocation(address)
-                viewModel.location.observe(viewLifecycleOwner) { location ->
-                    val geoHash = GeoHash(location.lat, location.lng, 7).geoHashString
-                    bundle.putString(Constants.ARG_GEOHASH, geoHash)
+//                viewModel.location.observe(viewLifecycleOwner) { location ->
+//                    val geoHash = GeoHash(location.lat, location.lng, 7).geoHashString
+//                    bundle.putString(Constants.ARG_GEOHASH, geoHash)
                     this.findNavController()
                         .navigate(R.id.action_searchFragment2_to_searchResultFragment, bundle)
-                }
+//                }
             } else {
                 var snackbar =
                     Snackbar.make(

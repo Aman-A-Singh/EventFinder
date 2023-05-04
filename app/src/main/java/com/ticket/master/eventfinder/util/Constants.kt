@@ -5,7 +5,8 @@ object Constants {
     const val ARG_DISTANCE = "distance"
     const val ARG_CATEGORY = "category"
     const val ARG_GEOHASH = "geoHash"
-    const val ARG_IS_FAVRoITE = "isFavorite"
+    const val ARG_IS_FAVRIOTE = "isFavorite"
+    const val ARG_ADDRESS = "address"
 
     const val ARG_EVENT_ID = "event_id"
 

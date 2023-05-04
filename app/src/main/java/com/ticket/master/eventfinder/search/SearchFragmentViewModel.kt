@@ -20,26 +20,25 @@ class SearchFragmentViewModel : ViewModel() {
             try {
                 val listString = AutoSuggestApi.retrofitService.getSuggestions(keyword)
                 stringList.value = listString
-            }catch (e:Exception){
+            } catch (e: Exception) {
 
             }
         }
     }
 
-    fun getLocation(address: String?) {
-        if(address != null){
-            viewModelScope.launch {
-                val _location = LocationServiceApi.retrofitService1.getLocation(LOCATION_KEY, address)
-                location.postValue(_location.results.get(0).geometry.location)
-            }
-        }else{
-            //write the logic to get last known location of user and post the location in LiveData
-            viewModelScope.launch {
-                val ipInfo = LocationServiceApi.retrofitService2.getAutoLocation(AUTO_LOCATION_IP_KEY)
-                val splitString = ipInfo.loc.split(",")
-                val _location = LocationX(splitString[0].toDouble(),splitString[1].toDouble())
-                location.postValue(_location)
-            }
+    fun getLocation(address: String) {
+        viewModelScope.launch {
+            val _location = LocationServiceApi.retrofitService1.getLocation(LOCATION_KEY, address)
+            location.postValue(_location.results.get(0).geometry.location)
+        }
+    }
+
+    fun getAutoLocation() {
+        viewModelScope.launch {
+            val ipInfo = LocationServiceApi.retrofitService2.getAutoLocation(AUTO_LOCATION_IP_KEY)
+            val splitString = ipInfo.loc.split(",")
+            val _location = LocationX(splitString[0].toDouble(), splitString[1].toDouble())
+            location.postValue(_location)
         }
     }
 }

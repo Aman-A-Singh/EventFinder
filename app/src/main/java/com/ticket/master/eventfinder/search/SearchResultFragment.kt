@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.firebase.geofire.core.GeoHash
 import com.ticket.master.eventfinder.R
 import com.ticket.master.eventfinder.adapter.SearchResultRecyclerViewAdapter
 import com.ticket.master.eventfinder.database.DataBaseViewModel
@@ -38,6 +39,7 @@ class SearchResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[SearchResultFragmentViewModel::class.java]
+        viewModel.getLocation(args.address)
         dataBaseViewModel = ViewModelProvider(this)[DataBaseViewModel::class.java]
         binding.searchResultToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -67,7 +69,11 @@ class SearchResultFragment : Fragment() {
             SearchResultRecyclerViewAdapter(requireActivity().findNavController(R.id.fragmentContainerView),dataBaseViewModel)
         binding.eventListRecyclerView.adapter = eventListAdapter
         binding.eventListRecyclerView.layoutManager = LinearLayoutManager(activity)
-        viewModel.getEvents(args.distance, args.category, args.keyword, args.geoHash)
+        viewModel.location.observe(viewLifecycleOwner){location->
+            val geoHash = GeoHash(location.lat, location.lng, 7).geoHashString
+            viewModel.getEvents(args.distance, args.category, args.keyword, geoHash)
+        }
+
         viewModel.eventList.observe(viewLifecycleOwner) { eventList ->
             eventListAdapter.submitList(eventList)
         }
