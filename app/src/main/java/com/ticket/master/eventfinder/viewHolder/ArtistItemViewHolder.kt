@@ -1,6 +1,7 @@
 package com.ticket.master.eventfinder.viewHolder
 
 import android.content.Intent
+import android.graphics.Paint
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -31,9 +32,8 @@ class ArtistItemViewHolder(private val itemBinding: ArtistItemRowBinding) :
 
     fun bind(item: ArtistDetail) {
         itemBinding.artistName.text = item.name
+        itemBinding.spotifyLink.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
-
-//        val myString = NumberFormat.getInstance(Locale.US).format(item.followers.total);
 
         val number = item.followers.total.toDouble()
         val myString = shorthand(number)
